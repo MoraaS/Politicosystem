@@ -26,18 +26,19 @@ body{
 .signup,
 .login {
     width:50%;
-    background-color: black;
+    background-color:white;
     height: 70px;
     float: left;
     text-align: center;
     line-height: 60px;
     text-transform: uppercase;
     cursor: pointer;
-    color: white;
+    color:black;
+    font-weight: bold;
 }
 .login-form,
 .signup-form{
-    background-color:black;
+    background-color:white;
     box-sizing: border-box;
     padding:40px;
     clear: both;
@@ -50,16 +51,16 @@ body{
     width: 100%;
     padding: 20px;
     margin-bottom: 25px;
-    border:2px solid white;
+    border:2px solid black;
     background:transparent;
-    color:white;
+    color:black;
     font-size: 14px;
     outline:none;
     transition: all 0.5s ease;
 
 }
 input:focus{
-    border: 2px solid lightseagreen;
+    border: 2px solid green;
 }
 
 .adminput{
