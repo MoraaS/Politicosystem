@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $(".login-form").hide();
+        $(".login").css("background","none");
+        
+        $(".login").click(function(){
+            $(".signup-form").hide();
+            $(".login-form").show(); 
+            $(".signup").css("background","none");
+            $(".login").css("background","black");
+        }
+        );
+        $(".signup").click(function(){
+            $(".signup-form").show();
+            $(".login-form").hide(); 
+            $(".signup").css("background","black");
+            $(".login").css("background","none");
+        }
+        );
+
+    })</script>
+</head>
+<header>
+    <div class= "wrapper">
+            <div class="nav-bar">
+                <div class="left-nav-bar">
+                    <a href="#">POLITICO</a>
+                </div>
+                
+     
+            </div>
+        </div> </header>
+<body>
+    <div class="container">
+        <div class="signup"> Sign Up</div>
+        <div class="login">Log in</div>
+
+        <div class="signup-form">
+            <input type="text" placeholder="Enter email" class="input"><br>
+            <input type="text" placeholder="Enter UserName" class="input"><br>
+            <input type="password" placeholder="Enter password" class="input"><br>
+            <input type="password" placeholder="Confirm password" class="input"><br>
+            <div class="button">Create Account</div>
+        </div>
+
+        <div class="login-form">
+            <input type="text" class ="input" placeholder="Enter email or UserName" ><br>
+            <input type="password" class="input" placeholder="password" ><br>
+            <div class="button">Log-in</div>
+            <span><a href="resetpassword.html"></a>Forgot my password</a></span>
+        </div>
+    </div>
+</body>
+</html>
