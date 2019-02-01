@@ -11,16 +11,20 @@
     <div class="wrapper">
       <div class="nav-bar">
         <div class="left-nav-bar">
-          <a href="#">POLITICO</a>
+        <a href="index.html">POLITICO</a> 
         </div>
         <div class="right-nav-bar">
           <ul>
-            <li><a href="createparty.html">Create Political Party </a></li>
+            <li><a href="profile.html">User</a></li>
+            <li><a href="index.html">Logout</a></li>
             <li>
-              <a href="viewparty.html" class="current">View All Parties</a>
+              <a href="viewparty.html" class="active">View All Parties</a>
             </li>
-            <li><a href="createoffice.html">New Government Office</a></li>
-            <li><a href="index.html">Log-out</a></li>
+            <li>
+              <a href="createoffice.html">New Government Office</a>
+            </li>
+            <li><a href="createparty.html">Create Political Party</a></li>
+            <li><a href="admindash.html">Home</a></li>
           </ul>
         </div>
       </div>
@@ -44,7 +48,7 @@
         <td>Benjamin Nyakundi</td>
         <td>When we come together great things happen</td>
         <td><button class="btndelete">Delete</button></td>
-        <td><button class="btnedit">Edit</button></td>
+        <td><button class="btnedit" onclick="editFunction()">Edit</button></td>
       </tr>
       <tr>
         <td>4567990</td>
@@ -52,7 +56,7 @@
         <td>John Mwamburi</td>
         <td>Nurturing Todays Youth to be the Leaders Tommorow</td>
         <td><button class="btndelete">Delete</button></td>
-        <td><button class="btnedit">Edit</button></td>
+        <td><button class="btnedit" onclick="editFunction()">Edit</button></td>
       </tr>
       <tr>
         <td>2368790</td>
@@ -60,8 +64,14 @@
         <td>Winnie Rop</td>
         <td>A brighter tommorow</td>
         <td><button class="btndelete">Delete</button></td>
-        <td><button class="btnedit">Edit</button></td>
+        <td><button class="btnedit" onclick="editFunction()">Edit</button></td>
       </tr>
     </table>
+
+    <script>
+      function editFunction() {
+        location.replace("createparty.html");
+      }
+    </script>
   </body>
 </html>
