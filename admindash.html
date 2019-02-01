@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="nav-bar">
+        <div class="left-nav-bar">
+          <a href="#">POLITICO</a>
+        </div>
+        <div class="right-nav-bar">
+          <ul>
+            <li><a href="index.html">Log Out</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="containerdash">
+      <h2>Administrator Dashboard</h2>
+      <div class="gridcontainer">
+        <div class="grid-item" onclick="reroute('createoffice.html')">
+          Create New Office
+        </div>
+        <div class="grid-item" onclick="reroute('createparty.html')">
+          Create Political Party
+        </div>
+        <div class="grid-item" onclick="reroute('viewparty.html')">
+          Edit Political Party
+        </div>
+      </div>
+    </div>
+    <script>
+      function reroute(page) {
+        location.replace(page);
+      }
+    </script>
+  </body>
+</html>

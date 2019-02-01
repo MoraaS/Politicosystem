@@ -208,6 +208,35 @@ h2{
  
 }
 
+.gridcontainer{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  background-color: white;
+  padding: 10px;
+  grid-column-gap: 20px;
+  grid-row-gap: 50px;
+}
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.212);
+  padding: 20px;
+  font-size: 20px;
+  font-weight: lighter;
+  text-align: center;
+}
+.containerdash{
+        width: 600px;
+        margin: 200px auto;
+}
+.containerdash h2{
+    margin: 35px 0;
+}
+
 /* .content{
     position:absolute;
     width: 40%;
