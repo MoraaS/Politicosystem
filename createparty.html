@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <body>
         <div class= "wrapper">
                 <div class="nav-bar">
                     <div class="left-nav-bar">
@@ -34,8 +33,13 @@
                         <input type="text" placeholder="Enter Party Name" class="adminput"><br>
                         <input type="text" placeholder="Party Leader" class="adminput"><br>
                         <input type="text" placeholder="Party Slogan" class="adminput"><br>
-                        <div class="button">Submit</div>
+                        <div class="button" onclick="createFunction()">Submit</div>
                     </div>
                 </div>
+                <script>
+                    function createFunction() {
+                      location.replace("viewparty.html");
+                    }
+                    </script>
 </body>
 </html>
