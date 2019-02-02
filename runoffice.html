@@ -1,44 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Run Office</title>
-    <link rel="stylesheet" href="./css/style.css">
-</head>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="nav-bar">
+        <div class="left-nav-bar">
+          <a href="index.html">POLITICO</a>
+        </div>
+        <div class="right-nav-bar">
+          <ul>
+            <li><a href="admindash.html">Administrator</a></li>
+            <li><a href="index.html">Log Out</a></li>
+            <li><a href="runoffice.html" class="active">Run for Office </a></li>
+            <li><a href="viewoffices.html">All Offices</a></li>
+            <li><a href="vote.html">Vote Here</a></li>
+            <li><a href="profile.html">Profile </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <h2>Express Your Interest in Running for office</h2>
+      <div class="voteform">
+        <input type="text" placeholder="Name Here" class="adminput" /><br />
+        <select class="adminput">
+          <option value="Presidential">Presidential</option>
+          <option value="Women Representative">Women Representative</option>
+          <option value="Governatorial">Governatorial</option>
+        </select>
+        <select class="adminput">
+          <option value="New Kenya">New Kenya</option>
+          <option value="Freedom Tomorrow">Freedom Tomorrow</option>
+          <option value="Republican Kenya">Republican Kenya</option>
+        </select>
 
-        <div class= "wrapper">
-                <div class="nav-bar">
-                    <div class="left-nav-bar">
-                        <a href="#">POLITICO</a>
-                    </div>
-                    <div class="right-nav-bar">
-                        <ul>
-                            <li><a href="index.html">Log Out</a></li>  
-                            <li><a href="vote.html">Vote Here</a></li>
-                            <li><a href="viewoffices.html">All Offices</a></li> 
-                            <li><a href="profile.html">Profile </a> </li>
-                            <li><a href="runoffice.html" class="active">Run for Office </a> </li>
-                            
-                        </ul>
-                    </div>
-         
-                </div>
-            </div> 
-            <div class="container">
-                <h2>Express Your Interest in Running for office</h2>
-             
-                        <input type="text" placeholder="Name Here"class="adminput"><br>
-                        
-                        <input type="text" placeholder="Political Office Name" class="adminput"><br>
-                    
-                        <input type="text" placeholder="Under which party" class="adminput"><br>
-                     
-                        <input type="text" placeholder="County Name" class="adminput"><br>
-                        <div class="button">Submit</div>
-                    </div>
-                </div>
-                </div>
-             </body>
-             </html>
+        <input type="text" placeholder="County Name" class="adminput" /><br />
+        <div class="button">Submit</div>
+      </div>
+    </div>
+  </body>
+</html>
