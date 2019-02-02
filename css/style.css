@@ -10,13 +10,6 @@ body {
   list-style: none;
   text-decoration: none;
 }
-/* header{
-    background-color: grey ;
-    color: antiquewhite;
-    padding-top: 30px;
-    min-height: 50px;
-    
-} */
 .container {
   width: 450px;
   margin: 70px auto;
@@ -114,8 +107,16 @@ span a {
 }
 .nav-bar .left-nav-bar a {
   font-family: "Coiny", cursive;
-  font-size: 35px;
   color: white;
+}
+.link:first-child {
+  text-decoration: none;
+  font-size: 70px;
+}
+
+.link:nth-child(2) {
+  align-self: center;
+  font-size: 35px;
 }
 .nav-bar .right-nav-bar ul li {
   display: inline;
@@ -163,7 +164,6 @@ span a {
   border-radius: 10px;
   font-weight: bold;
 }
-/* Added table */
 table {
   font-family: sans-serif;
   width: 1200px;
@@ -186,7 +186,7 @@ tr:nth-child(even) {
 }
 h2 {
   margin: 0;
-  padding: 20px 0 20px;
+  padding: 10px 0 10px;
   text-align: center;
   font-size: 22px;
 }
@@ -215,30 +215,31 @@ h2 {
 .grid-item {
   background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid rgba(0, 0, 0, 0.8);
-  padding: 20px;
-  font-size: 30px;
-  text-align: center;
+  padding: 10px;
+  font-size: 20px;
+  text-align: left;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(0, 0, 0, 0.212);
-  padding: 20px;
-  font-size: 20px;
   font-weight: lighter;
-  text-align: center;
+  margin-top: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 .containerdash {
-  width: 600px;
-  margin: 200px auto;
+  width: 80%;
+  height: 80%;
 }
 .containerdash h2 {
   margin: 35px 0;
 }
 
-/* .content{
-    position:absolute;
-    width: 40%;
-    top:30%;
-    left:50%;
-    height:18em;
-    transform:translateX(-50%) translateY(-50%);
-    color:#0E103D;
-} */
+.side-bar {
+  float: left;
+  height: 600px;
+  width: 25%;
+  background: #b4ced6;
+}
+.content {
+  float: right;
+  margin-top: 30px;
+}
