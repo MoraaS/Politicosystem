@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Sign Up Here</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+
+  <div class="wrapper">
+    <div class="nav-bar">
+      <div class="left-nav-bar">
+        <a class="link" href="index.html">P</a>
+        <a class="link" href="index.html">olitico</a>
+      </div>
+      <div class="right-nav-bar">
+        <ul>
+          <li><a href="profile.html">User </a></li>
+          <li><a href="admindash.html">Administrator</a></li>
+          <li><a href="signup.html " class="active">Create Account</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <body>
+    <div class="container">
+      <h2>Sign Up Here</h2>
+
+      <div class="signup-form">
+        <input type="text" placeholder="Enter email" class="input" /><br />
+        <input type="text" placeholder="Enter UserName" class="input" /><br />
+        <input
+          type="password"
+          placeholder="Enter password"
+          class="input"
+        /><br />
+        <input
+          type="password"
+          placeholder="Confirm password"
+          class="input"
+        /><br />
+        <div class="button" onclick="myFunction()">Create Account</div>
+      </div>
+    </div>
+    <script>
+      function myFunction() {
+        location.replace("profile.html");
+      }
+    </script>
+  </body>
+</html>

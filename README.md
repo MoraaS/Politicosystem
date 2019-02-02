@@ -1,19 +1,17 @@
-
-#Empty Readme file
-#GH Pages link  https://moraas.github.io/Politicosystem/
-#Pivotal Tracker Link https://www.pivotaltracker.com/n/projects/2241642
 Politico
+Politico is a platform that intends to make the voting process smooth and memorable for both the electoral body and the voters.
+Github link to view UI: https://moraas.github.io/Politicosystem/
+Pivotal Tracker Stories: https://www.pivotaltracker.com/n/projects/2241642
+Features Present
+	Users can sign up and login
+	Users are able to vote
+	Users have a profile they can view voting history
+	Users can ran for office
+	Admin can create government offices
+	Admin can create political parties
+	An administrator can choose to edit or delete a party
+Author
+Salma Moraa
+Credits
+Andela
 
-Flow Of ProjectHey Team
-Standups For the last 24hours;
-I created UI pages for;
-•	Admin dashboard
-•	Users to view all offices
-•	Users to vote for preferred acandidates
-•	Created user profile
-The next 24 hours;
-•	Improve the quality and slow of my work by working on all nav bars
-•	Improving the admiin dashboard
-•	Adding responsiveness to my buttons
-Blockers
-•	Difficulty in CSS styling in some elements 
