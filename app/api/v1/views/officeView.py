@@ -30,8 +30,11 @@ def create_office():
         "data": [{"office_id": office_id, "name": name}]
     }), 201)
 
-
-
+@office_endpoints.route('/offices', methods=['GET'])
+def get_offices():
+    return make_response(jsonify({"status": 200,
+                                  "data": OfficeModel.get_all()
+                                  }), 200)
 
 
 # @office_endpoints.route('/offices/<int:office_id>')
