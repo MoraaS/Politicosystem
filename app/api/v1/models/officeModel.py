@@ -15,9 +15,6 @@ class OfficeModel():
         }
         return offices.append(office)
 
-    # @staticmethod
-    # def get_all():
-    #     return offices
 
     # @staticmethod
     # def get_by_id(office_id):
