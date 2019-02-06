@@ -2,8 +2,8 @@ offices = []
 
 
 class OfficeModel():
-    def __init__(self, office_id, name, office_type):
-        self.office_id = office_id
+    def __init__(self, name, office_type):
+        self.office_id = len(offices)
         self.name = name
         self.office_type = office_type
 
