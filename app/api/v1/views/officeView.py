@@ -40,8 +40,4 @@ def get_offices():
 
 @office_endpoints.route('/offices/<int:office_id>', methods=['GET'])
 def get_by_id(office_id):
-    office = OfficeModel.get_by_id(office_id)
-    return make_response(jsonify({
-        "status": 200,
-        "data": office
-    }), 200)
+

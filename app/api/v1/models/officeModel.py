@@ -20,6 +20,4 @@ class OfficeModel():
         return offices
 
     @staticmethod
-    def get_by_id(id):
-        return[office for office in offices if office["office_id"] == id]
-    
+
