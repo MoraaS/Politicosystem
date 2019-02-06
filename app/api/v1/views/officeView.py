@@ -40,6 +40,7 @@ def get_offices():
 
 @office_endpoints.route('/offices/<int:office_id>', methods=['GET'])
 def get_by_id(office_id):
+
     specific_office = OfficeModel.get_by_id(office_id)
 
     if specific_office:
@@ -51,3 +52,4 @@ def get_by_id(office_id):
         "status": 404,
         "error": "The office does not exist"
     }), 404)
+
