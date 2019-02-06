@@ -7,4 +7,3 @@ app = Flask(__name__)
 
 app.register_blueprint(office_endpoints)
 app.register_blueprint(party_endpoints)
-
