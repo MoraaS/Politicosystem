@@ -49,5 +49,5 @@ def get_single_party(party_id):
 
     return make_response(jsonify({
         "status": 404,
-        "error": "The office does not exist"
+        "error": "The party does not exist"
     }), 404)
