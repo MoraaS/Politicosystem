@@ -28,3 +28,9 @@ def create_party():
         "status": 201,
         "data": [{"party_id": party_id, "name": name}]
     }), 201)
+
+@party_endpoints.route('/parties', methods=['GET'])
+def get_offices():
+    return make_response(jsonify({"status": 200,
+                                  "data": partyModel.get_all()
+                                  }), 200)
