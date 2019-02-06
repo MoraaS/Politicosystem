@@ -52,4 +52,3 @@ def get_by_id(office_id):
         "status": 404,
         "error": "The office does not exist"
     }), 404)
-
