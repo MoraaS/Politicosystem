@@ -19,10 +19,7 @@ class OfficeModel():
     def get_all():
         return offices
 
-    # @staticmethod
-    # def get_by_id(office_id):
-    #     return[office for office in offices if office[office_id] == office_id]
-    #     # for office in offices:
-    #     #     if office['office_id'] == (office_id):
-    #     #         return office
-    #     # return False
+    @staticmethod
+    def get_by_id(id):
+        return[office for office in offices if office["office_id"] == id]
+    
