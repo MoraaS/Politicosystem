@@ -25,3 +25,12 @@ class partyModel():
     def get_specific_party(party_id):
 
         return [party for party in parties if party["party_id"] == party_id]
+
+    @staticmethod
+    def delete_party(party_id):
+        deleted = False
+        for party in parties:
+            if party['party_id'] == party_id:
+                parties.remove(party)
+                deleted = True
+        return deleted
