@@ -20,3 +20,8 @@ class partyModel():
     @staticmethod
     def get_all():
         return parties
+
+    @staticmethod
+    def get_specific_party(party_id):
+
+        return [party for party in parties if["party_id"] == party_id]
