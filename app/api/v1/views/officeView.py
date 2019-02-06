@@ -1,5 +1,5 @@
 from flask import Flask, Blueprint, make_response, request, jsonify
-from app.api.v1.models.officeModel import OfficeModel
+from app.api.v1.models.officeModel import OfficeModel, offices
 
 
 office_endpoints = Blueprint('office', __name__, url_prefix='/api/v1')
@@ -9,8 +9,6 @@ office_endpoints = Blueprint('office', __name__, url_prefix='/api/v1')
 def create_office():
     data = request.get_json()
     try:
-
-        office_id = data['office_id']
         name = data['name']
         office_type = data['office_type']
 
@@ -21,13 +19,12 @@ def create_office():
             "error": "You have not provided all the fields"
         }), 400)
 
-    office = OfficeModel(office_id=office_id, name=name,
-                         office_type=office_type)
+    office = OfficeModel(name=name, office_type=office_type)
     office.create()
 
     return make_response(jsonify({
         "status": 201,
-        "data": [{"office_id": office_id, "name": name}]
+        "data": [{"office_id": len(offices)-1, "name": name}]
     }), 201)
 
 
