@@ -26,7 +26,7 @@ def create_party():
 
     return make_response(jsonify({
         "status": 201,
-        "data": [{"party_id": len(parties)-1, "name": name}]
+        "data": [{"party_id": len(parties)+1, "name": name}]
     }), 201)
 
 
@@ -58,5 +58,22 @@ def delete_party(party_id):
     if deleted_party:
         return make_response(jsonify({
             "status": 200, "data": deleted_party}), 200)
+    return make_response(jsonify({"status": 404, "message": "Party successfully deleted",
+                                  "error": "Could not find this id"}), 404)
+
+
+@party_endpoints.route('/parties/<int:party_id>/', methods=['PATCH'])
+def update_party(party_id):
+    data = request.get_json()
+    name = data['name']
+    if party_id is not None:
+        party = partyModel.get_specific_party(party_id)
+        if party is not None:
+            party['name'] = name
+            updated_party = partyModel(
+                party['name'], party['hqAddress'], party['logoUrl'])
+            updated_party.create()
+            return make_response(jsonify({
+                "status": 200, "data": party}), 200)
     return make_response(jsonify({"status": 404, "message": "Party successfully deleted",
                                   "error": "Could not find this id"}), 404)
