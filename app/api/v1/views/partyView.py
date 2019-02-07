@@ -26,7 +26,7 @@ def create_party():
 
     return make_response(jsonify({
         "status": 201,
-        "data": [{"party_id": len(parties)+1, "name": name}]
+        "data": [{"party_id": len(parties), "name": name}]
     }), 201)
 
 
@@ -58,8 +58,7 @@ def delete_party(party_id):
     if deleted_party:
         return make_response(jsonify({
             "status": 200, "data": deleted_party}), 200)
-    return make_response(jsonify({"status": 404, "message": "Party successfully deleted",
-                                  "error": "Could not find this id"}), 404)
+    return make_response(jsonify({"status": 404, "error": "Could not find this id"}), 404)
 
 
 @party_endpoints.route('/parties/<int:party_id>/', methods=['PATCH'])
