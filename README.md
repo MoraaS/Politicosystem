@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/bbcb75a47fed4509a006645dae946fad)](https://app.codacy.com/app/MoraaS/Politicosystem?utm_source=github.com&utm_medium=referral&utm_content=MoraaS/Politicosystem&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.org/MoraaS/Politicosystem.svg?branch=develop)](https://travis-ci.org/MoraaS/Politicosystem)[![Coverage Status](https://coveralls.io/repos/github/MoraaS/Politicosystem/badge.svg)](https://coveralls.io/github/MoraaS/Politicosystem)
 <a href="https://codeclimate.com/github/MoraaS/Politicosystem/maintainability"><img src="https://api.codeclimate.com/v1/badges/0d1a30ed1d095a439fc7/maintainability" /></a>
 
