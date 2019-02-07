@@ -1,8 +1,8 @@
 parties = [
-     {
-            "name": "xyz",
-            "party_id": 1
-        }
+    {
+        "name": "xyz",
+        "party_id": 1
+    }
 ]
 
 
@@ -38,3 +38,11 @@ class partyModel():
                 parties.remove(party)
                 deleted = True
         return deleted
+
+
+# kwargs because we're passing many arguments
+    @staticmethod
+    def update_party(party, **kwargs):
+        for key, value in kwargs.items():
+            party[key] = values
+        return "edit successful"
