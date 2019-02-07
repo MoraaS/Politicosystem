@@ -3,7 +3,7 @@ offices = []
 
 class OfficeModel():
     def __init__(self, name, office_type):
-        self.office_id = len(offices)
+        self.office_id = len(offices)+1
         self.name = name
         self.office_type = office_type
 

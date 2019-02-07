@@ -24,7 +24,7 @@ def create_office():
 
     return make_response(jsonify({
         "status": 201,
-        "data": [{"office_id": len(offices)-1, "name": name}]
+        "data": [{"office_id": len(offices), "name": name}]
     }), 201)
 
 

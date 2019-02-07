@@ -3,7 +3,7 @@ parties = []
 
 class partyModel():
     def __init__(self, name, hqAddress, logoUrl):
-        self.party_id = len(parties)
+        self.party_id = len(parties)+1
         self.name = name
         self.hqAddress = hqAddress
         self.logoUrl = logoUrl
