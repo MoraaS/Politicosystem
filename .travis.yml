@@ -9,4 +9,4 @@ script:
   - python -m pytest --cov=app
   - coveralls
 after_success:
-  - coverallsv
+  - coveralls
