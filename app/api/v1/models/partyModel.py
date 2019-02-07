@@ -1,16 +1,20 @@
-parties = []
+parties = [
+     {
+            "name": "xyz",
+            "party_id": 1
+        }
+]
 
 
 class partyModel():
     def __init__(self, name, hqAddress, logoUrl):
-        self.party_id = len(parties)+1
         self.name = name
         self.hqAddress = hqAddress
         self.logoUrl = logoUrl
 
     def create(self):
         party = {
-            "party_id": self.party_id,
+            "party_id": len(parties)+1,
             "name": self.name,
             "hqAddress": self.hqAddress,
             "logoUrl": self.logoUrl
