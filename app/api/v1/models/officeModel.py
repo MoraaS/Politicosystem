@@ -1,15 +1,19 @@
-offices = []
+offices = [
+     {
+            "name": "Senator",
+            "office_id": 2
+        }
+]
 
 
 class OfficeModel():
     def __init__(self, name, office_type):
-        self.office_id = len(offices)+1
         self.name = name
         self.office_type = office_type
 
     def create(self):
         office = {
-            "office_id": self.office_id,
+            "office_id": len(offices)+1,
             "name": self.name,
             "office_type": self.office_type
         }

@@ -16,7 +16,7 @@ def create_office():
 
         return make_response(jsonify({
             "status": 400,
-            "error": "You have not provided all the fields"
+            "error": "Not all fields are provided"
         }), 400)
 
     office = OfficeModel(name=name, office_type=office_type)
