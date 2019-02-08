@@ -15,8 +15,11 @@ class BaseTestCase(unittest.TestCase):
     def post(self, url, data):
         return self.client.post(url,
                                 data=json.dumps(data),
-                                content_type="application/json",)
+                                content_type="application/json")
+
+    def delete(self, url):
+        return self.client.delete(url,
+                                  content_type="application/json")
 
     def tearDown(self):
         pass
-  

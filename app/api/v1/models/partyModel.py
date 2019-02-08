@@ -1,8 +1,8 @@
 parties = [
-     {
-            "name": "xyz",
-            "party_id": 1
-        }
+    {
+        "name": "xyz",
+        "party_id": 1
+    }
 ]
 
 
@@ -38,3 +38,12 @@ class partyModel():
                 parties.remove(party)
                 deleted = True
         return deleted
+
+    @staticmethod
+    def edit_party(party_id, name):
+        updated = False
+        for party in parties:
+            if(party["party_id"] == party_id):
+                party["name"] = name
+                updated = True
+        return updated

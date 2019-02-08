@@ -39,3 +39,9 @@ class TestPartyCase(BaseTestCase):
             "status": 404,
             "error": "The party does not exist"
         })
+
+    # def test_deleting_party(self):
+
+    #     response = self.delete(
+    #         '/api/v1/parties/1')
+    #     self.assertEqual(response.status_code, 200)
