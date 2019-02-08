@@ -80,5 +80,36 @@
     <td>An admin can update party using id to select</td>
   </tr>
 </table>
+# Setup 
+
+clone repo from github
+
+- `$ git clone https://github.com/MoraaS/Politicosystem`
+- `$ cd store-api-v1`
+- `$ git checkout dev `
+
+Create a virtual environment
+
+`$ python3 -m venv venv`
+
+Activate the virtual environment
+
+`$ . venv/bin/activate`
+
+Install project dependencies
+
+`$ pip install -r requirements.txt`
+
+Running app
+
+`$ python3 run.py: flask run`
+
+# Running tests
+`$ pytest tests
+ $ python -m pytest --cov=app
+
+# Framework 
+Python Flask 
+
 <h2>Author: Salma Moraa </h2>
 <h2>Credits: Andela</h2>
