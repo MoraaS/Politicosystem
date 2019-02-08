@@ -12,6 +12,20 @@ def create_office():
         name = data['name']
         office_type = data['office_type']
 
+        if data['name'].strip() == "":
+            return make_response(jsonify({"status": 400,
+                                          "error": "Office name cant be blank"}
+                                         ), 400)
+        if data['office_type'].strip() == "":
+            return make_response(jsonify({"status": 400,
+                                          "error":
+                                          "office_type cant be blank"}), 400)
+        if (len(name) < 6):
+            return make_response(jsonify({
+                "status": 400,
+                "error": "Name cannot be less than 6 characters"
+            }), 400)
+
     except:
 
         return make_response(jsonify({
