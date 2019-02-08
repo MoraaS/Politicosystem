@@ -13,6 +13,24 @@ def create_party():
         hqAddress = data['hqAddress']
         logoUrl = data['logoUrl']
 
+        if data['name'].strip() == "":
+            return make_response(jsonify({"status": 400,
+                                          "error": "Name cant be left blank"}
+                                         ), 400)
+        if data['hqAddress'].strip() == "":
+            return make_response(jsonify({"status": 400,
+                                          "error":
+                                          "hqAddress cant be blank"}), 400)
+        if data['logoUrl'].strip() == "":
+            return make_response(jsonify({"status": 400,
+                                          "error":
+                                          "logoUrl cant be blank"}), 400)
+        if (len(name) < 6):
+            return make_response(jsonify({
+                "status": 400,
+                "error": "Name cannot be less than 6 characters"
+            }), 400)
+
     except:
 
         return make_response(jsonify({
@@ -59,11 +77,13 @@ def delete_party(party_id):
         return make_response(jsonify({
             "status": 200, "data": deleted_party}), 200)
     return make_response(jsonify
-                         ({"status": 404, "error": "Could not find this id"}), 404)
+                         ({"status": 404, "error":
+                           "Could not find this id"}), 404)
 
 
 @party_endpoints.route('/parties/<int:party_id>/name', methods=['PATCH'])
 def update_party(party_id):
+    data = request.get_json()
     name = data['name']
     party = partyModel.edit_party(party_id, name)
     if party:
