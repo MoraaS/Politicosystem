@@ -39,10 +39,11 @@ class partyModel():
                 deleted = True
         return deleted
 
-
-# kwargs because we're passing many arguments
     @staticmethod
-    def update_party(party, **kwargs):
-        for key, value in kwargs.items():
-            party[key] = values
-        return "edit successful"
+    def edit_party(party_id, name):
+        updated = False
+        for party in parties:
+            if(party["party_id"] == party_id):
+                party["name"] = name
+                updated = True
+        return updated
