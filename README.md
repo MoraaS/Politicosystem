@@ -29,3 +29,56 @@
   export FLASK_DEBUG=1<br>
   export FLASK_ENV=development<br>
   
+</ol>
+<h2>Endpoints</h2>
+
+<table>
+  <tr>
+    <th>HTTP Method</th>
+    <th>Route</th>
+    <th> Funtionality</th>
+  </tr>
+  <tr>
+    <td>POST</td>
+    <td>/api/v1/offices</td>
+    <td>An Admin Can Create Office</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>/api/v1/offices</td>
+    <td>A user can get a list of all offices</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>/api/v1/offices/<int:office_id></td>
+    <td>A User can get office by id</td>
+  </tr>
+  <tr>
+    <td>POST</td>
+    <td>/api/v1/parties</td>
+    <td>An admin can create a party</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>/api/v1/parties</td>
+    <td>A user can get a list of all parties</td>
+    
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>/api/v1/parties/<int:party_id></td>
+    <td>A user can get party by id</td>
+  </tr>
+  <tr>
+    <td>DELETE</td>
+    <td>/api/v1/parties/<int:party_id></td>
+    <td>An admin can delete party with id</td>
+  </tr>
+  <tr>
+    <td>PATCH</td>
+    <td>/api/v1/parties/<int:party_id></td>
+    <td>An admin can update party using id to select</td>
+  </tr>
+</table>
+<h2>Author: Salma Moraa </h2>
+<h2>Credits: Andela</h2>
