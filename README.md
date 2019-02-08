@@ -38,4 +38,4 @@ Politico is a platform that
   export FLASK_ENV=development<br>
   
 </ol>
->>>>>>> cc8a84d9bbea42e853d1d407c3654b817befb931
+>>>>>>> cc8a84d9bbea42e853d1d407c3654b817befb93
