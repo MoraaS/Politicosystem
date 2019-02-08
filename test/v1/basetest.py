@@ -17,6 +17,9 @@ class BaseTestCase(unittest.TestCase):
                                 data=json.dumps(data),
                                 content_type="application/json")
 
+    def delete(self, url):
+        return self.client.delete(url,
+                                  content_type="application/json")
+
     def tearDown(self):
         pass
-  
