@@ -10,6 +10,6 @@ app = Flask(__name__)
 def home():
     return "WELCOME TO POLITICO V1"
 
-
+app.url_map.strict_slashes = False
 app.register_blueprint(office_endpoints)
 app.register_blueprint(party_endpoints)
