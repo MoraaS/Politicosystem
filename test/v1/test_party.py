@@ -95,5 +95,6 @@ class TestPartyCase(BaseTestCase):
             "status": 404,
             "error": "The party does not exist"
         })
+    
 
   
