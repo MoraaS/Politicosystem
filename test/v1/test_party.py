@@ -3,7 +3,7 @@ import json
 
 
 class TestPartyCase(BaseTestCase):
-
+    
     def test_create_party(self):
         data = {
             "name": "Wipper",
@@ -84,6 +84,12 @@ class TestPartyCase(BaseTestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_get_specific_party(self):
+        data = {
+            "name": "Future Tomorrow",
+            "hqAddress": "Kitui",
+            "logoUrl": "http://sample._url"
+        }
+        self.post('/api/v1/parties', data=data)
         response = self.get('/api/v1/parties/1')
         self.assertEqual(response.status_code, 200)
 
@@ -96,4 +102,6 @@ class TestPartyCase(BaseTestCase):
             "error": "The party does not exist"
         })
 
-  
+    def test_delete_party(self):
+        response = self.delete('/api/v1/parties/1')
+        self.assertEqual(response.status_code, 200)

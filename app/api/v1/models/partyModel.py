@@ -1,9 +1,4 @@
-parties = [
-    {
-        "name": "xyz",
-        "party_id": 1
-    }
-]
+parties = []
 
 
 class partyModel():

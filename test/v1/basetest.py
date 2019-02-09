@@ -25,4 +25,4 @@ class BaseTestCase(unittest.TestCase):
                                   content_type="application/json")
 
     def tearDown(self):
-        pass
+        self.app.testing = False
