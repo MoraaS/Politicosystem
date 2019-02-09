@@ -66,7 +66,7 @@ class TestPartyTest(BaseTestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_get_office_by_id(self):
-        response = self.get('api/v1/offices/2')
+        response = self.get('api/v1/offices/1')
         self.assertEqual(response.status_code, 200)
 
     def test_get_office_non_existent_id(self):

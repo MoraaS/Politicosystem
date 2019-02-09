@@ -1,9 +1,4 @@
-offices = [
-     {
-            "name": "Senator",
-            "office_id": 2
-        }
-]
+offices = []
 
 
 class OfficeModel():
