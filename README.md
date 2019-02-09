@@ -80,32 +80,34 @@
     <td>An admin can update party using id to select</td>
   </tr>
 </table>
+
 # Setup 
 
-clone repo from github
+1. Clone repo from github
 
 - `$ git clone https://github.com/MoraaS/Politicosystem`
 - `$ cd store-api-v1`
 - `$ git checkout dev `
 
-Create a virtual environment
+2. Create a virtual environment
 
 `$ python3 -m venv venv`
 
-Activate the virtual environment
+3. Activate the virtual environment
 
 `$ . venv/bin/activate`
 
-Install project dependencies
+4. Install project dependencies
 
 `$ pip install -r requirements.txt`
 
-Running app
+5.Running app
 
 `$ python3 run.py: flask run`
 
 # Running tests
-`$ pytest tests
+`$ pytest tests<br>
+
  $ python -m pytest --cov=app
 
 # Framework 
