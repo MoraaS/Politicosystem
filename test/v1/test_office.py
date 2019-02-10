@@ -34,11 +34,23 @@ class TestPartyTest(BaseTestCase):
             "error": "Name cannot be less than 6 characters"
         })
 
+    def test_create_office_name_with_numerics(self):
+        data = {
+            "name": "Count123",
+            "office_type": "Legislature"
+        }
+        response = self.post('/api/v1/offices', data=data)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(json.loads(response.data),
+                         {
+            "status": 400,
+            "error": "Office name should only contain alphabets"
+        })
+
     def test_create_with_empty_name(self):
         data = {
             "name": "",
             "office_type": "Local Government"
-
         }
         response = self.post('/api/v1/offices', data=data)
         self.assertEqual(response.status_code, 400)
