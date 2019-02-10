@@ -5,12 +5,14 @@ class PartyModel():
     '''This is the base class of all methods of parties'''
 
     def __init__(self, name, hqaddress, logourl):
-        '''Instatiating the class and defining the object of the class'''
+        '''Instatiating the class and its variables
+        and defining the object of the class'''
         self.name = name
         self.hqaddress = hqaddress
         self.logourl = logourl
 
     def create(self):
+        '''Method to create party and uses the attributes of the class'''
         party = {
             "party_id": len(PARTIES)+1,
             "name": self.name,

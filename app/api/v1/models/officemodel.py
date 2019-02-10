@@ -3,6 +3,7 @@ OFFICES = []
 
 class OfficeModel():
     '''Base class for all methods of offices'''
+
     def __init__(self, name, office_type):
         '''Defining the constructor method of the class
         and self is the instance of the object'''

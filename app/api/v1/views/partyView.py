@@ -1,5 +1,6 @@
 '''Importing modules and functions to be used and routes relating to parties'''
-from flask import Flask, Blueprint, make_response, request, jsonify
+import re
+from flask import Blueprint, make_response, request, jsonify
 from app.api.v1.models.partyModel import PartyModel, PARTIES
 
 party_endpoints = Blueprint('party', __name__, url_prefix='/api/v1')
@@ -30,7 +31,13 @@ def create_party():
         if (len(name) < 6):
             return make_response(jsonify({
                 "status": 400,
-                "error": "Name cannot be less than 6 characters"
+                "error": "Party name should be more tha 6 characters"
+            }), 400)
+
+        if not re.match("^[a-zA-Z]*$", name):
+            return make_response(jsonify({
+                "status": 400,
+                "error": "Party name should only contain alphabets"
             }), 400)
 
     except:

@@ -1,8 +1,8 @@
 '''Importing the classes and methods to be used in officemodel
 and also all office routes'''
-from flask import Flask, Blueprint, make_response, request, jsonify
+import re
+from flask import Blueprint, make_response, request, jsonify
 from app.api.v1.models.officemodel import OfficeModel, OFFICES
-
 
 office_endpoints = Blueprint('office', __name__, url_prefix='/api/v1')
 
@@ -27,6 +27,11 @@ def create_office():
             return make_response(jsonify({
                 "status": 400,
                 "error": "Name cannot be less than 6 characters"
+            }), 400)
+        if not re.match("^[a-zA-Z]*$", name):
+            return make_response(jsonify({
+                "status": 400,
+                "error": "Office name should only contain alphabets"
             }), 400)
 
     except:
