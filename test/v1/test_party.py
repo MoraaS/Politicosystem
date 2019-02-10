@@ -7,8 +7,8 @@ class TestPartyCase(BaseTestCase):
     def test_create_party(self):
         data = {
             "name": "Wipper",
-            "hqAddress": "Kitui",
-            "logoUrl": "http://sample._url"
+            "hqaddress": "Kitui",
+            "logourl": "http://sample._url"
         }
         response = self.post('/api/v1/parties', data=data)
         self.assertEqual(response.status_code, 201)
@@ -26,8 +26,8 @@ class TestPartyCase(BaseTestCase):
     def test_create_with_empty_name(self):
         data = {
             "name": "",
-            "hqAddress": "Nairobi",
-            "logoUrl": "http://sample._url"
+            "hqaddress": "Nairobi",
+            "logourl": "http://sample._url"
         }
         response = self.post('/api/v1/parties', data=data)
         self.assertEqual(response.status_code, 400)
@@ -40,36 +40,36 @@ class TestPartyCase(BaseTestCase):
     def test_create_with_empty_hqAddress(self):
         data = {
             "name": "Wipper",
-            "hqAddress": "",
-            "logoUrl": "sample.com"
+            "hqaddress": "",
+            "logourl": "sample.com"
         }
         response = self.post('/api/v1/parties', data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(json.loads(response.data),
                          {
             "status": 400,
-            "error": "hqAddress cant be blank"
+            "error": "hqaddress cant be blank"
         })
 
     def test_create_with_empty_logoUrl(self):
         data = {
             "name": "Wipper",
-            "hqAddress": "Kitui",
-            "logoUrl": ""
+            "hqaddress": "Kitui",
+            "logourl": ""
         }
         response = self.post('/api/v1/parties', data=data)
         self.assertEqual(response.status_code, 400)
         self.assertEqual(json.loads(response.data),
                          {
             "status": 400,
-            "error": "logoUrl cant be blank"
+            "error": "logourl cant be blank"
         })
 
     def test_create_with_short_name(self):
         data = {
             "name": "Wip",
-            "hqAddress": "Nairobi",
-            "logoUrl": "http://sample._url"
+            "hqaddress": "Nairobi",
+            "logourl": "http://sample._url"
         }
         response = self.post('/api/v1/parties', data=data)
         self.assertEqual(response.status_code, 400)
@@ -86,8 +86,8 @@ class TestPartyCase(BaseTestCase):
     def test_get_specific_party(self):
         data = {
             "name": "Future Tomorrow",
-            "hqAddress": "Kitui",
-            "logoUrl": "http://sample._url"
+            "hqaddress": "Kitui",
+            "logourl": "http://sample._url"
         }
         self.post('/api/v1/parties', data=data)
         response = self.get('/api/v1/parties/1')
