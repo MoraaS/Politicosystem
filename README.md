@@ -12,7 +12,7 @@
 
 > - git clone https://github.com/MoraaS/Politicosystem
 > - cd Politicosystem
->- git checkout develop branch'
+> - git checkout develop branch'
 
 2 Create a virtual environment
 
@@ -32,6 +32,7 @@ While on the terminal of the Politicosystem:
 
 > - set APP_SETTING variable by: EXPORT APP_SETTING=development
 > - Set application entry point by: EXPORT FLASK_APP=run
+> - Run the app using : flask run
 
 # Running tests
 
