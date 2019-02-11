@@ -1,0 +1,17 @@
+ss
+__pycache__/
+*.py[cod]
+*$py.class
+
+.vscode
+.env
+.venv
+vscode/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+.mypy_cache/
+.pytest_cache/
