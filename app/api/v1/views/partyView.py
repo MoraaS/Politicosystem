@@ -88,7 +88,8 @@ def delete_party(party_id):
     deleted_party = PartyModel.delete_party(party_id)
     if deleted_party:
         return make_response(jsonify({
-            "status": 200, "data": deleted_party}), 200)
+            "status": 200, "data": deleted_party, "message":
+            "Deleted Successfully"}), 200)
     return make_response(jsonify
                          ({"status": 404, "error":
                            "Could not find this id"}), 404)
@@ -106,4 +107,4 @@ def update_party(party_id):
             "message": "Party was updated successfully"}), 200)
     else:
         return make_response(jsonify({
-            "status": 404, "message": "Could not find this id"}), 404)
+            "status": 404, "error": "Could not find this id"}), 404)

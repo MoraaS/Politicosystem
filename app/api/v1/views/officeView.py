@@ -43,7 +43,6 @@ def create_office():
 
     office = OfficeModel(name=name, office_type=office_type)
     office.create()
-    '''Calling the method create from officemodel'''
 
     return make_response(jsonify({
         "status": 201,
