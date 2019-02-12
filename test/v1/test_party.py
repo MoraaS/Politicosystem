@@ -129,3 +129,15 @@ class TestPartyCase(BaseTestCase):
             "error": "Could not find this id"
 
         })
+
+    def test_update_party(self):
+        data = {
+            "name": "FutureTomorrow",
+            "hqaddress": "Kitui",
+            "logourl": "http://sample._url"
+        }
+        self.post('/api/v1/parties', data=data)
+        response = self.patch('api/v1/parties/1/name', data={
+            "name": "newname"
+        })
+        self.assertEqual(response.status_code, 200)
