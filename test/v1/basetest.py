@@ -25,7 +25,7 @@ class BaseTestCase(unittest.TestCase):
                                   content_type="application/json")
 
     def patch(self, url, data):
-        return self.client.patch(url,
+        return self.client.patch(url, data=json.dumps(data),
                                  content_type="application/json")
 
     def tearDown(self):
