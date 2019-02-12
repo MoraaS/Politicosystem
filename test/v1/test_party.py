@@ -119,3 +119,13 @@ class TestPartyCase(BaseTestCase):
     def test_delete_party(self):
         response = self.delete('/api/v1/parties/1')
         self.assertEqual(response.status_code, 200)
+
+    def test_delete_non_existent(self):
+        response = self.delete('/api/v1/parties/5')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(json.loads(response.data),
+                         {
+            "status": 404,
+            "error": "Could not find this id"
+
+        })

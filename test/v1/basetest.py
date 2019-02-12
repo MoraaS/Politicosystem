@@ -24,5 +24,9 @@ class BaseTestCase(unittest.TestCase):
         return self.client.delete(url,
                                   content_type="application/json")
 
+    def patch(self, url, data):
+        return self.client.patch(url,
+                                 content_type="application/json")
+
     def tearDown(self):
         self.app.testing = False
