@@ -2,6 +2,8 @@
 from flask import Flask, make_response, jsonify
 from app.api.v1.views.officeView import office_endpoints
 from app.api.v1.views.partyView import party_endpoints
+from app.api.v2.views.userview import signup
+from app.config import app_config
 
 
 def deal_with_wrong_request(e):
@@ -37,18 +39,22 @@ def deal_with_wrong_method(e):
     )
 
 
-app = Flask(__name__)
+# @app.route('/')
+# def home():
+#     '''Function to initialize the home route'''
+#     return "WELCOME TO POLITICO V1"
+def create_app(config_name):
 
+    app = Flask(__name__)
+    app.config.from_pyfile('config.py')
+    app.config['SECRET_KEY'] = 'ikeepgoing'
 
-@app.route('/')
-def home():
-    '''Function to initialize the home route'''
-    return "WELCOME TO POLITICO V1"
+    app.url_map.strict_slashes = False
+    app.register_blueprint(office_endpoints)
+    app.register_blueprint(party_endpoints)
+    app.register_blueprint(signup)
+    app.register_error_handler(400, deal_with_wrong_request)
+    app.register_error_handler(405, deal_with_wrong_method)
+    app.register_error_handler(404, deal_with_wrong_url)
 
-
-app.url_map.strict_slashes = False
-app.register_blueprint(office_endpoints)
-app.register_blueprint(party_endpoints)
-app.register_error_handler(400, deal_with_wrong_request)
-app.register_error_handler(405, deal_with_wrong_method)
-app.register_error_handler(404, deal_with_wrong_url)
+    return app

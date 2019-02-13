@@ -1,12 +1,15 @@
 
 '''Entry point for the tests'''
+import os
 import json
 import unittest
-from app import app
+from app import create_app
 
 
 class BaseTestCase(unittest.TestCase):
     def setUp(self):
+        config_name = os.getenv("APP_SETTINGS")
+        app = create_app(config_name)
         self.client = app.test_client(self)
         self.app = app
         self.app_context = self.app.app_context()
