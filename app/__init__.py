@@ -3,6 +3,7 @@ from flask import Flask, make_response, jsonify
 from app.api.v1.views.officeView import office_endpoints
 from app.api.v1.views.partyView import party_endpoints
 from app.api.v2.views.userview import signup
+from app.api.v2.views.userview import login
 from app.config import app_config
 
 
@@ -53,6 +54,7 @@ def create_app(config_name):
     app.register_blueprint(office_endpoints)
     app.register_blueprint(party_endpoints)
     app.register_blueprint(signup)
+    app.register_blueprint(login)
     app.register_error_handler(400, deal_with_wrong_request)
     app.register_error_handler(405, deal_with_wrong_method)
     app.register_error_handler(404, deal_with_wrong_url)

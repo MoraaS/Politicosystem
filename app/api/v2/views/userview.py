@@ -3,6 +3,7 @@ from app.api.v2.models.usermodel import UserModel
 
 
 signup = Blueprint('signup', __name__, url_prefix='/api/v2/auth/')
+login = Blueprint('login', __name__, url_prefix='/api/v2/auth/')
 
 
 class UserRegister():
@@ -29,6 +30,17 @@ class UserRegister():
 
 
 class LoginUser():
+
+    @login.route('/login', methods=['POST'])
     def login():
         data = request.get_json()
-        
+        email = data['email']
+        password = data['password']
+
+        signeduser = UserModel()
+        signeduser.get_user_by_email(email)
+
+        return make_response(jsonify({
+            'status': 200,
+            'message': 'successfully logged in'
+        }), 200)
