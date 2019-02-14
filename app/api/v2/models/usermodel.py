@@ -23,5 +23,11 @@ class UserModel(Database):
         self.curr.close()
         return user
 
-    # def get_user_by_email(self, email)
-    #    query= "SELECT * FROM users WHERE email="
+    def get_user_by_email(self, email):
+            self.curr.execute('''
+            SELECT * FROM users WHERE users.email = '{}';
+            '''.format(email))
+            getemail = self.curr.fetchone()
+            self.conn.commit()
+            self.curr.close()
+            return getemail

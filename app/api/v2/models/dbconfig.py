@@ -29,7 +29,12 @@ class Database:
                 email VARCHAR (30) NOT NULL UNIQUE,
                 password VARCHAR (128) NOT NULL,
                 passportUrl VARCHAR (200)
-        )"""
+        );""",
+            """CREATE TABLE IF NOT EXISTS office (
+               id serial PRIMARY KEY NOT NULL,
+               office_type VARCHAR (50) NOT NULL,
+               office_name VARCHAR (50) NOT NULL
+           );"""
         ]
         try:
             for query in queries:
@@ -37,15 +42,18 @@ class Database:
             self.conn.commit()
             self.curr.close()
         except Exception as e:
+            print(e)
             return e
 
     def destroy_tables(self):
         users = "DROP TABLE IF EXISTS users CASCADE"
-        queries = [users]
+        office = "DROP TABLE IF EXISTS office CASCADE"
+        queries = [users, office]
         try:
             for query in queries:
                 self.curr.execute(query)
             self.conn.commit()
             self.curr.close()
         except Exception as e:
+            print(e)
             return e
