@@ -1,5 +1,6 @@
 '''Import the Flask class and register blueprints'''
 from flask import Flask, make_response, jsonify
+from app.api.v2.models.dbconfig import Database
 from app.api.v1.views.officeView import office_endpoints
 from app.api.v1.views.partyView import party_endpoints
 from app.api.v2.views.userview import signup
@@ -51,6 +52,11 @@ def create_app(config_name):
     app.config['SECRET_KEY'] = 'ikeepgoing'
 
     app.url_map.strict_slashes = False
+
+    Database().destroy_tables()
+
+    Database().create_tables()
+
     app.register_blueprint(office_endpoints)
     app.register_blueprint(party_endpoints)
     app.register_blueprint(signup)

@@ -33,9 +33,28 @@ class LoginUser():
 
     @login.route('/login', methods=['POST'])
     def login():
+
         data = request.get_json()
-        email = data['email']
-        password = data['password']
+        try:
+
+            email = data['email']
+            password = data['password']
+
+            if data['email'].strip() == "":
+                return make_response(jsonify({"status": 400,
+                                              "error": "Provide your email"}
+                                             ), 400)
+            if data['password'].strip() == "":
+                return make_response(jsonify({"status": 400,
+                                              "error":
+                                              "Please enter your password"}), 400)
+
+        except:
+
+            return make_response(jsonify({
+                "status": 400,
+                "error": "You have not provided all the fields"
+            }), 400)
 
         signeduser = UserModel()
         signeduser.get_user_by_email(email)
