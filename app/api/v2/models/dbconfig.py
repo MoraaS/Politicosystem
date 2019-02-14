@@ -32,8 +32,8 @@ class Database:
         );""",
             """CREATE TABLE IF NOT EXISTS office (
                id serial PRIMARY KEY NOT NULL,
-               office_type VARCHAR (50) NOT NULL,
-               office_name VARCHAR (50) NOT NULL
+               name VARCHAR (50) NOT NULL,
+               office_type VARCHAR (50) NOT NULL
            );"""
         ]
         try:
