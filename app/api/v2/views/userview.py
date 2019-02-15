@@ -22,17 +22,16 @@ class UserRegister():
         email = data['email']
         password = data['password']
 
-        email_exists = UserModel.get('users', email=email)
-
-        if email_exists:
-            return make_response(jsonify({'message':
-                                          'That email is taken.'}), 203)
-
         user = UserModel()
         user.register_user(firstname, lastname, othername,
                            email, password)
 
+        expires = datetime.timedelta(minutes=120)
+        token = create_access_token(identity=user.serialize(),
+                                    expires_delta=expires)
+
         return make_response(jsonify({
+            "token": token,
             "status": 201,
             "message": "You are registered successfully"
         }), 201)
@@ -56,7 +55,8 @@ class LoginUser():
             if data['password'].strip() == "":
                 return make_response(jsonify({"status": 400,
                                               "error":
-                                              "Please enter your password"}), 400)
+                                              "Please enter your password"}
+                                             ), 400)
 
         except:
 
@@ -68,7 +68,7 @@ class LoginUser():
         signeduser = UserModel()
         signeduser.get_user_by_email(email)
 
-        expires = datetime.timedelta(minutes=3000000)
+        expires = datetime.timedelta(minutes=120)
         token = create_access_token(identity=signeduser.serialize(),
                                     expires_delta=expires)
 

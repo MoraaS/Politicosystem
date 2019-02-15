@@ -57,3 +57,21 @@ class Database:
         except Exception as e:
             print(e)
             return e
+
+    # def select_data_from_database(query)
+    # """Handles select query"""
+    # rows = None
+    # conn, cursor = connect_to_db(query)
+    # if conn:
+
+    #     rows = cursor.fetchall()
+    #     conn.close()
+
+    # return rows
+
+    # def query_data_from_db(query)
+    # try:
+    #     conn = connect_to_db(query)
+    #     conn.close()
+    #     except psycopg2.error as error:
+    #         sys.exit(1)

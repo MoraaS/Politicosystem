@@ -40,6 +40,11 @@ def create_party():
                 "error": "Party name should only contain alphabets"
             }), 400)
 
+        if any(party['name'] == name for party in PARTIES):
+            return make_response(jsonify({
+                "status": 400,
+                "error": "This Party already exists"
+            }), 400)
     except:
 
         return make_response(jsonify({

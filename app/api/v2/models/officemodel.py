@@ -44,10 +44,10 @@ class OfficeModel(Database):
     #     return [office for office in OFFICES if office
     #             ["office_id"] == office_id]
 
-    def serialize(self):
-        return dict(
-            id=self.id,
-            name=self.name,
-            office_type=self.office_type
+    # def serialize(self):
+    #     return dict(
+    #         id=self.id,
+    #         name=self.name,
+    #         office_type=self.office_type
 
-        )
+    #     )
