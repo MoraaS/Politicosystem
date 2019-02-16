@@ -58,8 +58,8 @@ class Database:
             print(e)
             return e
 
-    # def select_data_from_database(query)
-    # """Handles select query"""
+    # def select_data_from_database(query):
+    #     """Handles select query"""
     # rows = None
     # conn, cursor = connect_to_db(query)
     # if conn:

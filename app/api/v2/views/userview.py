@@ -31,10 +31,15 @@ class UserRegister():
                                     expires_delta=expires)
 
         return make_response(jsonify({
-            "token": token,
             "status": 201,
-            "message": "You are registered successfully"
-        }), 201)
+            "data": [{
+                "token": token,
+                "user": {
+                    "email": email,
+                    "firstname": firstname
+                },
+
+            }]}), 201)
 
 
 class LoginUser():
@@ -73,7 +78,12 @@ class LoginUser():
                                     expires_delta=expires)
 
         return make_response(jsonify({
-            'token': token,
-            'status': 200,
-            'message': 'successfully logged in'
-        }), 200)
+            "status": 200,
+            "message": "You are successfully logged in",
+            "data": [{
+                "token": token,
+                "user": {
+                    "email": email
+                },
+
+            }]}), 200)
