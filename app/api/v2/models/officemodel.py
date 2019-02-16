@@ -29,24 +29,17 @@ class OfficeModel(Database):
         """
         self.curr.execute(
             """
-        SELECT id, name,office_type FROM office
+        SELECT office_id, name,office_type FROM office
         """)
         offices = self.curr.fetchall()
         self.save()
         return json.dumps(offices, default=str)
 
-    # @staticmethod
-    # def get_by_id(office_id):
-    #     '''Defining method to get
-    #     office by id, and passing parameters to it.'''
-
-    #     return [office for office in OFFICES if office
-    #             ["office_id"] == office_id]
-
-    # def serialize(self):
-    #     return dict(
-    #         id=self.id,
-    #         name=self.name,
-    #         office_type=self.office_type
-
-    #     )
+    def get_by_id(self, office_id):
+        '''Defining method to get
+        office by id, and passing parameters to it.'''
+        self.curr.execute(
+            """SELECT * FROM office WHERE office_id={}""".format(office_id))
+        offices = self.curr.fetchone()
+        self.save()
+        return json.dumps(offices, default=str)
