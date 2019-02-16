@@ -5,6 +5,10 @@ python:
 install:
   - pip install -r requirements.txt
 # command to run tests
+services:
+  - postgresql
+before script:
+  - psql -c 'create database politicosys_test;' -U
 script:
   - python -m pytest --cov=app
   - coveralls
