@@ -40,7 +40,7 @@ class Database:
                 passportUrl VARCHAR (200)
         );""",
             """CREATE TABLE IF NOT EXISTS office (
-               id serial PRIMARY KEY NOT NULL,
+               office_id serial PRIMARY KEY NOT NULL,
                name VARCHAR (50) NOT NULL,
                office_type VARCHAR (50) NOT NULL
            );"""

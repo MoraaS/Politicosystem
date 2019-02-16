@@ -3,7 +3,7 @@ from flask import Blueprint, make_response, request, jsonify
 from app.api.v2.models.officemodel import OfficeModel
 import json
 
-office_v2 = Blueprint('office2', __name__, url_prefix='/api/v2/auth/')
+office_v2 = Blueprint('office2', __name__, url_prefix='/api/v2/')
 
 
 @office_v2.route('/offices', methods=['POST'])
@@ -43,10 +43,18 @@ def create_office():
     office = OfficeModel()
     office.create(name, office_type)
 
+    office_object = []
+    office = {
+        "name": name,
+        "office_type": office_type
+    }
+    office_object.append(office)
     return make_response(jsonify({
         "status": 201,
         "message": "office created successfully"
-    }), 201)
+    },
+        office_object
+    ), 201)
 
 
 @office_v2.route('/offices', methods=['GET'])
@@ -54,13 +62,14 @@ def get_offices():
     '''Function to get all offices'''
     return make_response(jsonify({"status": 200,
                                   "offices": json.loads(OfficeModel()
-                                                        .get_all_offices())}),200)
+                                                        .get_all_offices())}), 200)
 
 
 @office_v2.route('/offices/<int:office_id>', methods=['GET'])
 def get_by_id(office_id):
     '''Function to get office by id and passing the parameter id'''
-    specific_office = OfficeModel.get_by_id(office_id)
+    specific_office = OfficeModel().get_by_id(office_id)
+    specific_office = json.loads(specific_office)
 
     if specific_office:
 
