@@ -21,8 +21,7 @@ class UserModel(Database):
         lastname, othername, email, password'''
             .format(firstname, lastname, othername, email, password))
         user = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        self.save()
         return user
 
     def get_user_by_email(self, email):
@@ -30,8 +29,7 @@ class UserModel(Database):
             SELECT * FROM users WHERE users.email = '{}';
             '''.format(email))
         getemail = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        self.save()
         return getemail
 
     def serialize(self):

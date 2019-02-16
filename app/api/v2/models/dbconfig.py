@@ -6,6 +6,11 @@ import psycopg2
 import os
 
 
+# conn_url = "dbname = 'postgres' host = 'localhost' port = '5432' password = 'postgres'"
+# url = os.getenv(['DB_URL'])
+# test_url=os.getenv(['TEST_DB_URL'])
+
+
 class Database:
     '''Base class to setup DB'''
 
@@ -18,6 +23,10 @@ class Database:
                                      user=self.db_user,
                                      password=self.db_password)
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
+
+    def save(self):
+        self.conn.commit()
+        self.curr.close()
 
     def create_tables(self):
         queries = [
@@ -39,8 +48,7 @@ class Database:
         try:
             for query in queries:
                 self.curr.execute(query)
-            self.conn.commit()
-            self.curr.close()
+            self.save()
         except Exception as e:
             print(e)
             return e
@@ -52,8 +60,7 @@ class Database:
         try:
             for query in queries:
                 self.curr.execute(query)
-            self.conn.commit()
-            self.curr.close()
+            self.save()
         except Exception as e:
             print(e)
             return e

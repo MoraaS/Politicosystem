@@ -20,7 +20,7 @@ class Testing(Config):
     '''Configuration for testing environment'''
     DEBUG = True
     TESTING = True
-    DB_NAME = os.getenv('DB_TEST_NAME')
+    DB_TEST_NAME = os.getenv('DB_TEST_NAME')
 
 
 class Production(Config):
