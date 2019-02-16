@@ -52,6 +52,3 @@ class TestUsers(BaseTestCase):
         }
         response = self.post("api/v2/auth/login", data=login_data)
         self.assertEqual(response.status_code, 400)
-    
-
-    

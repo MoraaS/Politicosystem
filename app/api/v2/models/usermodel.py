@@ -3,7 +3,8 @@ from app.api.v2.models.dbconfig import Database
 
 class UserModel(Database):
 
-    def __init__(self, firstname=None, lastname=None, othername=None, email=None, password=None):
+    def __init__(self, firstname=None, lastname=None, othername=None,
+                 email=None, password=None):
 
         super().__init__()
         self.firstname = firstname
@@ -15,8 +16,9 @@ class UserModel(Database):
     def register_user(self, firstname, lastname, othername, email, password):
         self.curr.execute(
             '''
-        INSERT INTO users(firstname, lastname, othername, email, password) VALUES
-        ('{}','{}','{}','{}','{}') RETURNING firstname, lastname, othername, email, password'''
+        INSERT INTO users(firstname, lastname, othername, email, password)
+        VALUES ('{}','{}','{}','{}','{}') RETURNING firstname,
+        lastname, othername, email, password'''
             .format(firstname, lastname, othername, email, password))
         user = self.curr.fetchone()
         self.conn.commit()
@@ -39,5 +41,4 @@ class UserModel(Database):
             lastname=self.lastname,
             othername=self.othername,
             password=self.password
-
         )

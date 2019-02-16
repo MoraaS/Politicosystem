@@ -52,7 +52,7 @@ def create_office():
 def get_offices():
     '''Function to get all offices'''
     return make_response(jsonify({"status": 200,
-                                  "data": OfficeModel.get_all()
+                                  "data": OfficeModel.get_all_offices()
                                   }), 200)
 
 

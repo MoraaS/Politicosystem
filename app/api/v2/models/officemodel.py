@@ -30,11 +30,11 @@ class OfficeModel(Database):
         """
         self.curr.execute(
             """
-        SELECT * FROM office
+        SELECT id, name,office_type FROM office
         """)
 
         offices = self.cursor.fetchall()
-        return offices
+        return OfficeModel(dbconfig.select_from_db(get_all_offices))
 
     # @staticmethod
     # def get_by_id(office_id):
@@ -44,10 +44,10 @@ class OfficeModel(Database):
     #     return [office for office in OFFICES if office
     #             ["office_id"] == office_id]
 
-    def serialize(self):
-        return dict(
-            id=self.id,
-            name=self.name,
-            office_type=self.office_type
+    # def serialize(self):
+    #     return dict(
+    #         id=self.id,
+    #         name=self.name,
+    #         office_type=self.office_type
 
-        )
+    #     )

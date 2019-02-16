@@ -34,6 +34,12 @@ def create_office():
                 "error": "Office name should only contain alphabets"
             }), 400)
 
+        if any(office['name'] == name for office in OFFICES):
+            return make_response(jsonify({
+                "status": 400,
+                "error": "This office already exists"
+            }), 400)
+
     except:
 
         return make_response(jsonify({
