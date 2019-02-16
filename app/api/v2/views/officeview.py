@@ -1,6 +1,7 @@
 import re
 from flask import Blueprint, make_response, request, jsonify
 from app.api.v2.models.officemodel import OfficeModel
+import json
 
 office_v2 = Blueprint('office2', __name__, url_prefix='/api/v2/auth/')
 
@@ -52,8 +53,8 @@ def create_office():
 def get_offices():
     '''Function to get all offices'''
     return make_response(jsonify({"status": 200,
-                                  "data": OfficeModel.get_all_offices()
-                                  }), 200)
+                                  "offices": json.loads(OfficeModel()
+                                                        .get_all_offices())}),200)
 
 
 @office_v2.route('/offices/<int:office_id>', methods=['GET'])

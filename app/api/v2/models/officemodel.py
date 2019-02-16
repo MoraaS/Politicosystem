@@ -1,4 +1,5 @@
 from app.api.v2.models.dbconfig import Database
+import json
 
 
 class OfficeModel(Database):
@@ -19,12 +20,10 @@ class OfficeModel(Database):
         ('{}','{}') RETURNING name, office_type'''
             .format(name, office_type))
         office = self.curr.fetchone()
-        self.conn.commit()
-        self.curr.close()
+        self.save()
         return office
 
-    @staticmethod
-    def get_all_offices():
+    def get_all_offices(self):
         """
             method to get all offices from db.
         """
@@ -32,9 +31,9 @@ class OfficeModel(Database):
             """
         SELECT id, name,office_type FROM office
         """)
-
-        offices = self.cursor.fetchall()
-        return OfficeModel(dbconfig.select_from_db(get_all_offices))
+        offices = self.curr.fetchall()
+        self.save()
+        return json.dumps(offices, default=str)
 
     # @staticmethod
     # def get_by_id(office_id):
