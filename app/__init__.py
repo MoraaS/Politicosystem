@@ -7,6 +7,7 @@ from app.api.v1.views.partyView import party_endpoints
 from app.api.v2.views.userview import signup
 from app.api.v2.views.userview import login
 from app.api.v2.views.officeview import office_v2
+from app.api.v2.views.voterview import vote_v2
 from app.config import app_config
 
 
@@ -69,6 +70,7 @@ def create_app(config_name):
     app.register_blueprint(signup)
     app.register_blueprint(login)
     app.register_blueprint(office_v2)
+    app.register_blueprint(vote_v2)
     app.register_error_handler(400, deal_with_wrong_request)
     app.register_error_handler(405, deal_with_wrong_method)
     app.register_error_handler(404, deal_with_wrong_url)

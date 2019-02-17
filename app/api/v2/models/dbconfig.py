@@ -6,11 +6,6 @@ import psycopg2
 import os
 
 
-# conn_url = "dbname = 'postgres' host = 'localhost' port = '5432' password = 'postgres'"
-# url = os.getenv(['DB_URL'])
-# test_url=os.getenv(['TEST_DB_URL'])
-
-
 class Database:
     '''Base class to setup DB'''
 
@@ -32,6 +27,7 @@ class Database:
         queries = [
             """
              CREATE TABLE IF NOT EXISTS users(
+                user_id serial PRIMARY KEY NOT NULL,
                 firstname VARCHAR (24) NOT NULL,
                 lastname VARCHAR (24) NOT NULL,
                 othername VARCHAR (24),
@@ -43,6 +39,13 @@ class Database:
                office_id serial PRIMARY KEY NOT NULL,
                name VARCHAR (50) NOT NULL,
                office_type VARCHAR (50) NOT NULL
+           );""",
+            """CREATE TABLE IF NOT EXISTS voters (
+               voter_id serial NOT NULL,
+               office INTEGER,
+               candidate INTEGER,
+               voter INTEGER,
+               PRIMARY KEY (office, voter)
            );"""
         ]
         try:
@@ -56,7 +59,8 @@ class Database:
     def destroy_tables(self):
         users = "DROP TABLE IF EXISTS users CASCADE"
         office = "DROP TABLE IF EXISTS office CASCADE"
-        queries = [users, office]
+        voters = "DROP TABLE IF EXISTS office CASCADE"
+        queries = [users, office, voters]
         try:
             for query in queries:
                 self.curr.execute(query)
@@ -64,21 +68,3 @@ class Database:
         except Exception as e:
             print(e)
             return e
-
-    # def select_data_from_database(query):
-    #     """Handles select query"""
-    # rows = None
-    # conn, cursor = connect_to_db(query)
-    # if conn:
-
-    #     rows = cursor.fetchall()
-    #     conn.close()
-
-    # return rows
-
-    # def query_data_from_db(query)
-    # try:
-    #     conn = connect_to_db(query)
-    #     conn.close()
-    #     except psycopg2.error as error:
-    #         sys.exit(1)
