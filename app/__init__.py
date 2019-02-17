@@ -61,8 +61,6 @@ def create_app(config_name):
 
     jwt.init_app(app)
 
-    Database().destroy_tables()
-
     Database().create_tables()
 
     app.register_blueprint(office_endpoints)

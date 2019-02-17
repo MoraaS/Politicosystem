@@ -2,6 +2,7 @@ import os
 import json
 import unittest
 from app import create_app
+from app.api.v2.models.dbconfig import Database
 
 
 class BaseTestCase(unittest.TestCase):
@@ -31,3 +32,5 @@ class BaseTestCase(unittest.TestCase):
 
     def tearDown(self):
         self.app.testing = False
+        db = Database()
+        db.destroy_tables()

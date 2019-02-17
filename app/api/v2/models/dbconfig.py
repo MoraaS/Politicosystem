@@ -4,16 +4,24 @@ that converts lists to dictionaries'''
 from psycopg2.extras import RealDictCursor
 import psycopg2
 import os
+from sys import modules
 
 
 class Database:
     '''Base class to setup DB'''
 
     def __init__(self):
-        self.db_name = os.getenv('DB_NAME')
-        self.db_host = os.getenv('DB_HOST')
-        self.db_user = os.getenv('DB_USER')
-        self.db_password = os.getenv('DB_PASSWORD')
+        if 'pytest' in modules:
+            self.db_name = os.getenv('DB_TEST_NAME')
+            self.db_host = os.getenv('DB_TEST_HOST')
+            self.db_user = os.getenv('DB_TEST_USER')
+            self.db_password = os.getenv('DB_TEST_PASSWORD')
+        else:
+            self.db_name = os.getenv('DB_NAME')
+            self.db_host = os.getenv('DB_HOST')
+            self.db_user = os.getenv('DB_USER')
+            self.db_password = os.getenv('DB_PASSWORD')
+
         self.conn = psycopg2.connect(database=self.db_name, host=self.db_host,
                                      user=self.db_user,
                                      password=self.db_password)
@@ -59,7 +67,7 @@ class Database:
     def destroy_tables(self):
         users = "DROP TABLE IF EXISTS users CASCADE"
         office = "DROP TABLE IF EXISTS office CASCADE"
-        voters = "DROP TABLE IF EXISTS office CASCADE"
+        voters = "DROP TABLE IF EXISTS voters CASCADE"
         queries = [users, office, voters]
         try:
             for query in queries:
