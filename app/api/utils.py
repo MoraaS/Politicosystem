@@ -1,5 +1,5 @@
 import re
-from flask import jsonify, make_response
+from flask import jsonify
 from flask_jwt_extended import get_jwt_identity
 import json
 
@@ -57,6 +57,33 @@ def validate_login(request):
 
     if data['password'].strip() == "":
         error = {"password": "Please enter your password"}
+        errors.append(error)
+
+    return errors
+
+
+def validate_office(request):
+    data = request.get_json()
+    errors = []
+    office_keys = ["name", "office_type"]
+
+    for key in office_keys:
+
+        if key not in request.json:
+
+            error = {key: "Field must be provided"}
+
+            errors.append(error)
+
+    if errors:
+        return errors
+
+    if data['name'].strip() == "":
+        error = {"name": "Provide your office name"}
+        errors.append(error)
+
+    if data['office_type'].strip() == "":
+        error = {"office_type": "Provide the office type"}
         errors.append(error)
 
     return errors

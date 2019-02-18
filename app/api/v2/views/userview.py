@@ -36,17 +36,19 @@ class UserRegister():
             expires = datetime.timedelta(minutes=120)
             token = create_access_token(identity=user.serialize(),
                                         expires_delta=expires)
+            
+            user_object = []
+            user = {
+                "firstname": firstname,
+                "lastname": lastname,
+                "othername": othername,
+                "email": email
+            }
+            user_object.append(user)
 
             return make_response(jsonify({
                 "status": 201,
-                "data": [{
-                    "token": token,
-                    "user": {
-                        "email": email,
-                        "firstname": firstname
-                    },
-
-                }]}), 201)
+                "data": [{"token": token}, user_object]}), 201)
 
         else:
             return make_response(jsonify({"errors": errors,
@@ -73,17 +75,21 @@ class LoginUser():
             expires = datetime.timedelta(minutes=120)
             token = create_access_token(identity=signeduser.serialize(),
                                         expires_delta=expires)
+            userlogin_object = []
+            user = {
+                "email": email,
+                "password": password
+            }
+            userlogin_object.append(user)
 
             return make_response(jsonify({
                 "status": 200,
                 "message": "You are successfully logged in",
                 "data": [{
-                    "token": token,
-                    "user": {
-                        "email": email
-                    },
+                    "token": token},
+                    userlogin_object]
 
-                }]}), 200)
+                }), 200)
         else:
             return make_response(jsonify({"errors": errors,
                                           "status": 400
