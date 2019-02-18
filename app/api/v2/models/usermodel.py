@@ -5,8 +5,8 @@ class UserModel(Database):
 
     def __init__(self, firstname=None, lastname=None, othername=None,
                  email=None, password=None):
-
         super().__init__()
+
         self.firstname = firstname
         self.lastname = lastname
         self.othername = othername

@@ -2,6 +2,7 @@ import re
 from flask import Blueprint, make_response, request, jsonify
 from app.api.v2.models.officemodel import OfficeModel
 import json
+from app.api.utils import validate_office
 
 office_v2 = Blueprint('office2', __name__, url_prefix='/api/v2/')
 
@@ -9,19 +10,13 @@ office_v2 = Blueprint('office2', __name__, url_prefix='/api/v2/')
 @office_v2.route('/offices', methods=['POST'])
 def create_office():
     '''Function to create a new office'''
-    data = request.get_json()
-    try:
+    errors = validate_office(request)
+    if not errors:
+
+        data = request.get_json()
         name = data['name']
         office_type = data['office_type']
 
-        if data['name'].strip() == "":
-            return make_response(jsonify({"status": 400,
-                                          "error": "Office name cant be blank"}
-                                         ), 400)
-        if data['office_type'].strip() == "":
-            return make_response(jsonify({"status": 400,
-                                          "error":
-                                          "office_type cant be blank"}), 400)
         if (len(name) < 6):
             return make_response(jsonify({
                 "status": 400,
@@ -33,28 +28,27 @@ def create_office():
                 "error": "Office name should only contain alphabets"
             }), 400)
 
-    except:
+        office = OfficeModel()
+        office.create(name, office_type)
 
+        office_object = []
+        office = {
+            "name": name,
+            "office_type": office_type
+        }
+        office_object.append(office)
         return make_response(jsonify({
-            "status": 400,
-            "error": "Not all fields are provided"
-        }), 400)
+            "status": 201,
+            "message": "office created successfully"
+        },
+            office_object
+        ), 201)
 
-    office = OfficeModel()
-    office.create(name, office_type)
+    else:
+        return make_response(jsonify({"errors": errors,
+                                      "status": 400
 
-    office_object = []
-    office = {
-        "name": name,
-        "office_type": office_type
-    }
-    office_object.append(office)
-    return make_response(jsonify({
-        "status": 201,
-        "message": "office created successfully"
-    },
-        office_object
-    ), 201)
+                                      }), 400)
 
 
 @office_v2.route('/offices', methods=['GET'])
