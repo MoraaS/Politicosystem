@@ -17,6 +17,7 @@ def new_vote():
 
         office = data["office"]
         candidate = data["candidate"]
+        voter = data["voter"]
 
     except:
 
