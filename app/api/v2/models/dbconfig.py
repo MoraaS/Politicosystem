@@ -1,6 +1,7 @@
 '''psycopg is a database adapter it helps
 create a connection using a cursor. . Extras is a library in psycopg
 that converts lists to dictionaries'''
+from datetime import datetime
 from psycopg2.extras import RealDictCursor
 import psycopg2
 import os
@@ -41,7 +42,8 @@ class Database:
                 othername VARCHAR (24),
                 email VARCHAR (30) NOT NULL UNIQUE,
                 password VARCHAR (128) NOT NULL,
-                passportUrl VARCHAR (200)
+                passportUrl VARCHAR (200),
+                isAdmin BOOLEAN DEFAULT FALSE
         );""",
             """CREATE TABLE IF NOT EXISTS office (
                office_id serial PRIMARY KEY NOT NULL,
@@ -49,12 +51,21 @@ class Database:
                office_type VARCHAR (50) NOT NULL
            );""",
             """CREATE TABLE IF NOT EXISTS voters (
-               voter_id serial NOT NULL,
-               office INTEGER,
-               candidate INTEGER,
-               voter INTEGER,
-               PRIMARY KEY (office, voter)
-           );"""
+               voter_id serial PRIMARY KEY NOT NULL,
+               createdOn TIMESTAMP NULL DEFAULT NOW(),
+               createdBy INTEGER NOT NULL,
+               office_id INTEGER,
+               candidate_id INTEGER
+               
+           );""",
+            """CREATE TABLE IF NOT EXISTS parties(
+                party_id SERIAL PRIMARY KEY NOT NULL,
+                name VARCHAR(50) NOT NULL,
+                hqaddress VARCHAR(50) NOT NULL,
+                logourl VARCHAR(50) NOT NULL
+            );"""
+
+
         ]
         try:
             for query in queries:
@@ -68,7 +79,8 @@ class Database:
         users = "DROP TABLE IF EXISTS users CASCADE"
         office = "DROP TABLE IF EXISTS office CASCADE"
         voters = "DROP TABLE IF EXISTS voters CASCADE"
-        queries = [users, office, voters]
+        parties = "DROP TABLE IF EXISTS voters CASCADE"
+        queries = [users, office, voters, parties]
         try:
             for query in queries:
                 self.curr.execute(query)
