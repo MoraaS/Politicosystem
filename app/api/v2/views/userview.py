@@ -23,7 +23,9 @@ class UserRegister():
             lastname = data['lastname']
             othername = data['othername']
             email = data['email']
+            phonenumber = data['phonenumber']
             password = data['password']
+            passporturl = data['passporturl']
 
             if UserModel().get_user_by_email(email):
                 return make_response(jsonify({"error": "Email is in Already in Use",
@@ -31,18 +33,21 @@ class UserRegister():
 
             user = UserModel()
             user.register_user(firstname, lastname, othername,
-                               email, password)
+                               email, phonenumber, password, passporturl)
 
             expires = datetime.timedelta(minutes=120)
             token = create_access_token(identity=user.serialize(),
                                         expires_delta=expires)
-            
+
             user_object = []
             user = {
                 "firstname": firstname,
                 "lastname": lastname,
                 "othername": othername,
-                "email": email
+                "email": email,
+                "phonenumber": phonenumber,
+                "password": password,
+                "passporturl": passporturl
             }
             user_object.append(user)
 
@@ -89,7 +94,7 @@ class LoginUser():
                     "token": token},
                     userlogin_object]
 
-                }), 200)
+            }), 200)
         else:
             return make_response(jsonify({"errors": errors,
                                           "status": 400

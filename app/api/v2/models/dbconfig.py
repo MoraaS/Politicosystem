@@ -41,6 +41,7 @@ class Database:
                 lastname VARCHAR (24) NOT NULL,
                 othername VARCHAR (24),
                 email VARCHAR (30) NOT NULL UNIQUE,
+                phonenumber VARCHAR (30) NOT NULL,
                 password VARCHAR (128) NOT NULL,
                 passportUrl VARCHAR (200),
                 isAdmin BOOLEAN DEFAULT FALSE

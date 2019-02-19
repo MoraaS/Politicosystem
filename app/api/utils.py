@@ -8,7 +8,7 @@ def validate_signup(request):
     data = request.get_json()
     errors = []
     signup_keys = ['firstname', 'lastname', 'othername',
-                   'email', 'password']
+                   'email', 'phonenumber', 'password', 'passporturl']
     for key in signup_keys:
 
         if key not in request.json:
@@ -17,21 +17,33 @@ def validate_signup(request):
 
     if errors:
         return errors
-    if data['firstname'].strip() == "":
 
+    if data['firstname'].strip() == "":
         error = {"firstname": "Firstname is required"}
         errors.append(error)
+
     if data['lastname'].strip() == "":
         error = {"firstname": "Lastname is required"}
         errors.append(error)
+
     if data['othername'].strip() == "":
         error = {"firstname": "Othername is required"}
         errors.append(error)
+
     if data['email'].strip() == "":
         error = {"email": "email is required"}
         errors.append(error)
+
+    if data['phonenumber'].strip() == "":
+        error = {"phonenumber": "phonenumber is required"}
+        errors.append(error)
+
     if data['password'].strip() == "":
         error = {"password": "password is required"}
+        errors.append(error)
+
+    if data['passporturl'].strip() == "":
+        error = {"passporturl": "passporturl is required"}
         errors.append(error)
 
 
