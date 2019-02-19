@@ -1,9 +1,11 @@
+import re
 import datetime
 from flask import Blueprint, make_response, request, jsonify
 from app.api.v2.models.usermodel import UserModel
 from flask_jwt_extended import (create_access_token,
                                 jwt_required, get_jwt_identity)
 from app.api.utils import validate_login, validate_signup
+from werkzeug.security import check_password_hash
 
 signup = Blueprint('signup', __name__, url_prefix='/api/v2/auth/')
 login = Blueprint('login', __name__, url_prefix='/api/v2/auth/')
@@ -23,31 +25,49 @@ class UserRegister():
             lastname = data['lastname']
             othername = data['othername']
             email = data['email']
+            phonenumber = data['phonenumber']
             password = data['password']
+            passporturl = data['passporturl']
 
-            if UserModel().get_user_by_email(email):
+            if (len(password) < 8):
+                return make_response(jsonify({
+                    "status": 400,
+                    "error": "Password cannot be less than 8 characters"
+                }), 400)
+
+            if not re.match("^[a-zA-Z0-9_+-]+@[a-zA-Z-]+\.[a-zA-Z0-]+$", email):
+                return make_response(jsonify({
+                    "status": 400,
+                    "error": "Wrong email format"}), 400)
+
+            user = UserModel(firstname, lastname, othername,
+                             email, phonenumber, password, passporturl)
+
+            if user.get_user_by_email(email):
                 return make_response(jsonify({"error": "Email is in Already in Use",
                                               "status": 400}), 400)
 
-            user = UserModel()
-            user.register_user(firstname, lastname, othername,
-                               email, password)
+            user.register_user()
 
             expires = datetime.timedelta(minutes=120)
             token = create_access_token(identity=user.serialize(),
                                         expires_delta=expires)
-            
+
             user_object = []
             user = {
                 "firstname": firstname,
                 "lastname": lastname,
                 "othername": othername,
-                "email": email
+                "email": email,
+                "phonenumber": phonenumber,
+                "password": password,
+                "passporturl": passporturl
             }
             user_object.append(user)
 
             return make_response(jsonify({
                 "status": 201,
+                "message": "Account Created Successfully",
                 "data": [{"token": token}, user_object]}), 201)
 
         else:
@@ -72,6 +92,15 @@ class LoginUser():
             signeduser = UserModel()
             signeduser.get_user_by_email(email)
 
+            loged_user = signeduser.get_user_by_email(email)
+
+            if not loged_user:
+                return make_response(jsonify({"status": 404,
+                                              "Error": "The email you entered doesnt exist"}), 404)
+            if not check_password_hash(loged_user["password"], password):
+                return make_response(jsonify({"status": 404,
+                                              "Error": "The password you entered doesnt exist"}), 404)
+
             expires = datetime.timedelta(minutes=120)
             token = create_access_token(identity=signeduser.serialize(),
                                         expires_delta=expires)
@@ -89,7 +118,7 @@ class LoginUser():
                     "token": token},
                     userlogin_object]
 
-                }), 200)
+            }), 200)
         else:
             return make_response(jsonify({"errors": errors,
                                           "status": 400

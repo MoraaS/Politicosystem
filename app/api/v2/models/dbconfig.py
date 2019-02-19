@@ -41,6 +41,7 @@ class Database:
                 lastname VARCHAR (24) NOT NULL,
                 othername VARCHAR (24),
                 email VARCHAR (30) NOT NULL UNIQUE,
+                phonenumber VARCHAR (30) NOT NULL,
                 password VARCHAR (128) NOT NULL,
                 passportUrl VARCHAR (200),
                 isAdmin BOOLEAN DEFAULT FALSE
@@ -56,7 +57,6 @@ class Database:
                createdBy INTEGER NOT NULL,
                office_id INTEGER,
                candidate_id INTEGER
-               
            );""",
             """CREATE TABLE IF NOT EXISTS parties(
                 party_id SERIAL PRIMARY KEY NOT NULL,
@@ -64,8 +64,6 @@ class Database:
                 hqaddress VARCHAR(50) NOT NULL,
                 logourl VARCHAR(50) NOT NULL
             );"""
-
-
         ]
         try:
             for query in queries:

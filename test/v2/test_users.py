@@ -14,23 +14,54 @@ class TestUsers(BaseTestCase):
             "lastname": "moraa",
             "othername": "maranga",
             "email": "salmamaranga@gmail.com",
-            "password": "Password123"
+            "phonenumber": "0713452678",
+            "password": "Password123",
+            "passporturl": "passporturl"
         }
 
         response = self.post(
             "api/v2/auth/signup", data=signup_data)
         self.assertEqual(response.status_code, 201)
 
-    def test_login(self):
-        """ test for login """
-        login_data = {
+    def test_signup_with_no_firstname(self):
+        signup_data = {
+            "lastname": "moraa",
+            "othername": "maranga",
             "email": "salmamaranga@gmail.com",
             "password": "Password123"
         }
+        response = self.post("api/v2/auth/signup", data=signup_data)
+        self.assertEqual(response.status_code, 400)
 
-        response = self.post(
-            "api/v2/auth/login", data=login_data)
-        self.assertEqual(response.status_code, 200)
+    def test_signup_with_no_lastname(self):
+        signup_data = {
+            "firstname": "salma",
+            "othername": "maranga",
+            "email": "salmamaranga@gmail.com",
+            "password": "Password123"
+        }
+        response = self.post("api/v2/auth/signup", data=signup_data)
+        self.assertEqual(response.status_code, 400)
+
+    def test_signup_with_no_othername(self):
+        signup_data = {
+            "firstname": "salma",
+            "lastname": "maranga",
+            "email": "salmamaranga@gmail.com",
+            "password": "Password123"
+        }
+        response = self.post("api/v2/auth/signup", data=signup_data)
+        self.assertEqual(response.status_code, 400)
+
+    def test_signup_with_no_email(self):
+        signup_data = {
+            "firstname": "salma",
+            "lastname": "maranga",
+            "othername": "maranga",
+            "password": "Password123"
+        }
+        response = self.post("api/v2/auth/signup", data=signup_data)
+        self.assertEqual(response.status_code, 400)
 
     def test_login_with_empty_fields(self):
         login_data = {}

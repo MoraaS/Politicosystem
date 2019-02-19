@@ -1,42 +1,52 @@
 from app.api.v2.models.dbconfig import Database
+from psycopg2.extras import RealDictCursor
+from werkzeug.security import generate_password_hash
 
 
 class UserModel(Database):
 
     def __init__(self, firstname=None, lastname=None, othername=None,
-                 email=None, password=None):
+                 email=None, phonenumber=None,
+                 password="", passporturl=None):
         super().__init__()
-
         self.firstname = firstname
         self.lastname = lastname
         self.othername = othername
         self.email = email
-        self.password = password
+        self.phonenumber = phonenumber
+        self.password = generate_password_hash(password)
+        self.passporturl = passporturl
 
-    def register_user(self, firstname, lastname, othername, email, password):
+    def register_user(self):
+        self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
         self.curr.execute(
             '''
-        INSERT INTO users(firstname, lastname, othername, email, password)
-        VALUES ('{}','{}','{}','{}','{}') RETURNING firstname,
-        lastname, othername, email, password'''
-            .format(firstname, lastname, othername, email, password))
+        INSERT INTO users(firstname, lastname, othername, email, phonenumber,
+        password, passporturl)
+        VALUES ('{}','{}','{}','{}','{}','{}','{}') RETURNING firstname,
+        lastname, othername, email, phonenumber, password, passporturl'''
+            .format(self.firstname, self.lastname, self.othername, self.email, self.phonenumber, self.password, self.passporturl))
         user = self.curr.fetchone()
         self.save()
         return user
 
     def get_user_by_email(self, email):
+        self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
         self.curr.execute('''
             SELECT * FROM users WHERE users.email = '{}';
             '''.format(email))
-        getemail = self.curr.fetchone()
+        user_email = self.curr.fetchone()
         self.save()
-        return getemail
+        return user_email
 
     def serialize(self):
+        '''convert user data to dictionary'''
         return dict(
             email=self.email,
             firstname=self.firstname,
             lastname=self.lastname,
             othername=self.othername,
-            password=self.password
+            phonenumber=self.phonenumber,
+            password=self.password,
+            passporturl=self.passporturl
         )
