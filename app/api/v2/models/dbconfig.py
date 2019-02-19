@@ -64,8 +64,6 @@ class Database:
                 hqaddress VARCHAR(50) NOT NULL,
                 logourl VARCHAR(50) NOT NULL
             );"""
-
-
         ]
         try:
             for query in queries:

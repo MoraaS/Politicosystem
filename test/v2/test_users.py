@@ -63,17 +63,6 @@ class TestUsers(BaseTestCase):
         response = self.post("api/v2/auth/signup", data=signup_data)
         self.assertEqual(response.status_code, 400)
 
-    def test_login(self):
-        """ test for login """
-        login_data = {
-            "email": "salmamaranga@gmail.com",
-            "password": "Password123"
-        }
-
-        response = self.post(
-            "api/v2/auth/login", data=login_data)
-        self.assertEqual(response.status_code, 200)
-
     def test_login_with_empty_fields(self):
         login_data = {}
         response = self.post("api/v2/auth/login", data=login_data)
