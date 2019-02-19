@@ -16,13 +16,16 @@ class UserModel(Database):
         self.password = password
         self.passporturl = passporturl
 
-    def register_user(self, firstname, lastname, othername, email, phonenumber, password, passporturl):
+    def register_user(self, firstname, lastname, othername, email, phonenumber,
+                      password, passporturl):
         self.curr.execute(
             '''
-        INSERT INTO users(firstname, lastname, othername, email, phonenumber, password, passporturl)
-        VALUES ('{}','{}','{}','{}','{}','{}','{}') RETURNING firstname,
+        INSERT INTO users(firstname, lastname, othername, email, phonenumber,
+        password, passporturl)
+        VALUES ('{}','{}','{}','{}','{}',md5('{}'),'{}') RETURNING firstname,
         lastname, othername, email, phonenumber, password, passporturl'''
-            .format(firstname, lastname, othername, email, phonenumber, password, passporturl))
+            .format(firstname, lastname, othername, email, phonenumber,
+            password, passporturl))
         user = self.curr.fetchone()
         self.save()
         return user
