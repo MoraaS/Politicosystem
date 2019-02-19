@@ -57,7 +57,6 @@ class Database:
                createdBy INTEGER NOT NULL,
                office_id INTEGER,
                candidate_id INTEGER
-               
            );""",
             """CREATE TABLE IF NOT EXISTS parties(
                 party_id SERIAL PRIMARY KEY NOT NULL,
