@@ -1,7 +1,7 @@
 '''Import the Flask class and register blueprints'''
-from flask import Flask, make_response, jsonify
+from flask import Flask, make_response, jsonify, request
 from app.api.v2.models.dbconfig import Database
-from flask_jwt_extended import JWTManager
+# from flask_jwt_extended import JWTManager
 from app.api.v1.views.officeView import office_endpoints
 from app.api.v1.views.partyView import party_endpoints
 from app.api.v2.views.userview import signup
@@ -44,11 +44,12 @@ def deal_with_wrong_method(e):
     )
 
 
+
 # @app.route('/')
 # def home():
 #     '''Function to initialize the home route'''
 #     return "WELCOME TO POLITICO V1"
-jwt = JWTManager()
+# jwt = JWTManager()
 
 
 def create_app(config_name):
@@ -59,7 +60,7 @@ def create_app(config_name):
 
     app.url_map.strict_slashes = False
 
-    jwt.init_app(app)
+    # jwt.init_app(app)
 
     Database().create_tables()
 

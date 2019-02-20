@@ -1,7 +1,10 @@
 import re
-from flask import jsonify
-from flask_jwt_extended import get_jwt_identity
+from flask import jsonify, request, make_response
+# from flask_jwt_extended import get_jwt_identity
+from functools import wraps
 import json
+import jwt
+import os
 
 
 def validate_signup(request):
@@ -45,6 +48,8 @@ def validate_signup(request):
     if data['passporturl'].strip() == "":
         error = {"passporturl": "passporturl is required"}
         errors.append(error)
+
+    return errors
 
 
 def validate_login(request):
@@ -99,3 +104,43 @@ def validate_office(request):
         errors.append(error)
 
     return errors
+
+
+def login_required(fn):
+    """Decorator to protect admin route"""
+    @wraps(fn)
+    def token_decorator(*args, **kwargs):
+
+        if "Authorization" in request.headers:
+            token = request.headers['Authorization']
+        else:
+            return make_response(jsonify({"error": "Token is missing"}), 403)
+
+        try:
+            data = jwt.decode(token, os.getenv('SECRET_KEY'))
+        except Exception as e:
+            return make_response(jsonify({"message": "Token Required"}))
+
+        return fn(*args, **kwargs)
+    return token_decorator
+
+
+def admin_required(fn):
+    @wraps(fn)
+    def admin_decorator(*args, **kwargs):
+
+        if "Authorization" in request.headers:
+            token = request.headers['Authorization']
+        else:
+            return make_response(jsonify({"error": "Token is missing"}), 403)
+
+        try:
+            data = jwt.decode(token, os.getenv('SECRET_KEY'))
+            if data['admin'] != True:
+                return make_response(jsonify({"message": "To access the method \
+                    admin token is required"}), 403)
+        except Exception as e:
+            return make_response(jsonify({"message": "token is invalid"}), 403)
+
+        return fn(*args, **kwargs)
+    return admin_decorator

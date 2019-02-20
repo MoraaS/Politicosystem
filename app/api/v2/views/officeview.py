@@ -3,11 +3,15 @@ from flask import Blueprint, make_response, request, jsonify
 from app.api.v2.models.officemodel import OfficeModel
 import json
 from app.api.utils import validate_office
+# from flask_jwt_extended import jwt_required
+from app.api.utils import login_required, admin_required
+
 
 office_v2 = Blueprint('office2', __name__, url_prefix='/api/v2/')
 
 
 @office_v2.route('/offices', methods=['POST'])
+@admin_required
 def create_office():
     '''Function to create a new office'''
     errors = validate_office(request)
@@ -52,6 +56,8 @@ def create_office():
 
 
 @office_v2.route('/offices', methods=['GET'])
+@login_required
+# @jwt_required
 def get_offices():
     '''Function to get all offices'''
     return make_response(jsonify({"status": 200,
