@@ -38,8 +38,8 @@ class UserModel(Database):
             SELECT * FROM users WHERE users.email = '{}';
             '''.format(email))
         user_email = self.curr.fetchone()
-        print(user_email)
         self.save()
+        print(user_email)
         return user_email
 
     def get_phoneNumber(self, phoneNumber):
@@ -50,7 +50,7 @@ class UserModel(Database):
                 phoneNumber= '{}'''.format(phoneNumber))
         user_number = self.curr.fetchone()
         self.save()
-        return user_user
+        return user_number
 
     def serialize(self):
         '''convert user data to dictionary'''

@@ -13,4 +13,4 @@ script:
   - coverage run --source=app -m pytest && coverage report
   - coveralls
 after_success:
-  - coverallsv
+  - coveralls
