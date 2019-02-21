@@ -149,7 +149,7 @@ def login_required(fn):
         if "Authorization" in request.headers:
             token = request.headers['Authorization']
         else:
-            return make_response(jsonify({"error": "Token is missing"}), 403)
+            return make_response(jsonify({"error": "Token is missingrequired for this method"}), 403)
 
         try:
             data = jwt.decode(token, os.getenv('SECRET_KEY'))
@@ -168,7 +168,7 @@ def admin_required(fn):
         if "Authorization" in request.headers:
             token = request.headers['Authorization']
         else:
-            return make_response(jsonify({"error": "Token is missing"}), 403)
+            return make_response(jsonify({"error": "Admin Token is required for this method missing"}), 403)
 
         try:
             data = jwt.decode(token, os.getenv('SECRET_KEY'))
