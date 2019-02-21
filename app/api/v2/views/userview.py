@@ -38,8 +38,7 @@ class UserRegister():
                     "error": "Password cannot be less than 8 characters"
                 }), 400)
 
-            if not re.match("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\
-                (?=.*[!@#\$%\^&\*])", password):
+            if not re.match("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$", password):
                 return make_response(jsonify({
                     "status": 400,
                     "error": "Password must have atleast one uppercase,\

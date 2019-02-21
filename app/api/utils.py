@@ -111,7 +111,7 @@ def validate_parties(request):
     return errors
 
 
-def vaidate_office(request):
+def validate_office(request):
     data = request.get_json()
     errors = []
     office_keys = ["name", "office_type"]

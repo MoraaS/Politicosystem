@@ -52,6 +52,16 @@ class UserModel(Database):
         self.save()
         return user_number
 
+    def get_user_by_id(self, user_id):
+        """Get user by their id"""
+        self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
+        self.curr.execute('''
+            SELECT * FROM users WHERE users.user_id = '{}';
+            '''.format(user_id))
+        user_id = self.curr.fetchone()
+        self.save()
+        return user_id
+
     def serialize(self):
         '''convert user data to dictionary'''
         return dict(

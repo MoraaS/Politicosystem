@@ -1,5 +1,6 @@
 from app.api.v2.models.dbconfig import Database
 import json
+from psycopg2.extras import RealDictCursor
 
 
 class OfficeModel(Database):
@@ -14,6 +15,7 @@ class OfficeModel(Database):
 
     def create(self, name, office_type):
         """create office admin only function"""
+        self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
         self.curr.execute(
             '''
         INSERT INTO office(name, office_type) VALUES
@@ -47,8 +49,7 @@ class OfficeModel(Database):
     def get_office_by_name(self, name):
         """Retrieve office with specific name."""
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
-        self.curr.execute(""" SELECT * FROM office
-        \WHERE office.name = '{}';""".format(name))
+        self.curr.execute(""" SELECT * FROM office WHERE office.name = '{}';""".format(name))
         office_name = self.curr.fetchone()
         self.save()
         return office_name
