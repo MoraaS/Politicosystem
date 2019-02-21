@@ -5,6 +5,7 @@ import json
 from app.api.utils import login_required, admin_required, validate_office
 from app.api.v2.models.usermodel import UserModel
 from app.api.v2.models.candidates import CandidatesModel
+from app.api.v2.models.votermodel import VoteModel
 
 office_v2 = Blueprint('office2', __name__, url_prefix='/api/v2/')
 
@@ -121,3 +122,25 @@ def register_candidate(office_id):
             "status": 202,
             "data": new_cand
         }), 202)
+
+
+@office_v2.route('/offices/<int:office_id>/result', methods=['GET'])
+def election_results(office_id):
+    existing_office = OfficeModel().get_by_id(office_id)
+    if existing_office == 'null':
+        # office doesn't exist
+        return make_response(jsonify({
+            "status": 404,
+            "error": "office doesn't exist"
+        }))
+    else:
+        results = VoteModel().get_results_by_office_id(office_id)
+        if results:
+            return make_response(jsonify({
+                "status": 200,
+                "results": results
+            }))
+    return make_response(jsonify({
+        "status": 200,
+        "error": "results not found"
+    }))
