@@ -11,14 +11,15 @@ class VoteModel(Database):
         self.office_id = office_id
         self.candidate_id = candidate_id
 
-    def create_new_vote(self, createdby, office_id, candidate_id):
+    def create_new_vote(self, createdby=None, office_id=None, candidate_id=None):
         """
         Add a new vote to the voters table.
         """
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
         self.curr.execute("""
-        INSERT INTO voters(createdby, office_id, candidate_id) VALUES ('{}', '{}', '{}') RETURNING name, hqaddress, logourl
-            """).format(self.createdby, self.office_id, self.candidate_id)
+        INSERT INTO voters(createdby, office_id, candidate_id)
+        VALUES('{}', '{}', '{}') RETURNING createdby, office_id, candidate_id
+            """.format(createdby, office_id, candidate_id))
         votes = self.curr.fetchone()
         self.save()
         return votes
