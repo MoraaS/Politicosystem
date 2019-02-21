@@ -73,16 +73,6 @@ class Database:
             print(e)
             return e
 
-        # def create_admin(self):
-        # """Create a deafult admin user."""
-
-        # query = "INSERT INTO users(firstname,lastname,email,password,phoneNumber,passportUrl,isAdmin)\
-        # VALUES('Salma','Morara','salmaadmin@gmail.com','Salma@admin123','0713623572','passporturl',)"
-
-        self.curr.execute(query)
-        self.conn.commit()
-        self.curr.close()
-
     def destroy_tables(self):
         users = "DROP TABLE IF EXISTS users CASCADE"
         office = "DROP TABLE IF EXISTS office CASCADE"

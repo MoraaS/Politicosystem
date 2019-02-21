@@ -2,10 +2,8 @@ import re
 from flask import Blueprint, make_response, request, jsonify
 from app.api.v2.models.officemodel import OfficeModel
 import json
-from app.api.utils import validate_office
-# from flask_jwt_extended import jwt_required
-from app.api.utils import login_required, admin_required
-
+from app.api.utils import login_required, admin_required, vaidate_office
+from app.api.v2.models.usermodel import UserModel
 
 office_v2 = Blueprint('office2', __name__, url_prefix='/api/v2/')
 
@@ -33,6 +31,10 @@ def create_office():
             }), 400)
 
         office = OfficeModel()
+
+        if office.get_office_by_name(name):
+            return make_response(jsonify({"error": "The Office Name Already exists",
+                                          "status": 400}), 400)
         office.create(name, office_type)
 
         office_object = []
@@ -56,8 +58,6 @@ def create_office():
 
 
 @office_v2.route('/offices', methods=['GET'])
-@login_required
-# @jwt_required
 def get_offices():
     '''Function to get all offices'''
     return make_response(jsonify({"status": 200,

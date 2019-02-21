@@ -79,7 +79,39 @@ def validate_login(request):
     return errors
 
 
-def validate_office(request):
+def validate_parties(request):
+    data = request.get_json()
+    
+    errors = []
+    party_keys = ["name", "hqaddress", "logourl"]
+
+    for key in party_keys:
+
+        if key not in request.json:
+
+            error = {key: "Field must be provided"}
+
+            errors.append(error)
+
+    if errors:
+        return errors
+
+    if data['name'].strip() == "":
+        error = {"name": "Provide your party name"}
+        errors.append(error)
+
+    if data['hqaddress'].strip() == "":
+        error = {"hqaddress": "Provide the hqaddress"}
+        errors.append(error)
+
+    if data['logourl'].strip() == "":
+        error = {"logourl": "Provide the logourl"}
+        errors.append(error)
+
+    return errors
+
+
+def vaidate_office(request):
     data = request.get_json()
     errors = []
     office_keys = ["name", "office_type"]
@@ -106,6 +138,9 @@ def validate_office(request):
     return errors
 
 
+"""Decorators"""
+
+
 def login_required(fn):
     """Decorator to protect admin route"""
     @wraps(fn)
@@ -126,6 +161,7 @@ def login_required(fn):
 
 
 def admin_required(fn):
+    """Decorator to protect admin routes"""
     @wraps(fn)
     def admin_decorator(*args, **kwargs):
 
@@ -136,7 +172,8 @@ def admin_required(fn):
 
         try:
             data = jwt.decode(token, os.getenv('SECRET_KEY'))
-            if data['admin'] != True:
+            if data['isAdmin'] != True:
+
                 return make_response(jsonify({"message": "To access the method \
                     admin token is required"}), 403)
         except Exception as e:

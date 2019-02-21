@@ -38,7 +38,8 @@ class UserRegister():
                     "error": "Password cannot be less than 8 characters"
                 }), 400)
 
-            if not re.match("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])", password):
+            if not re.match("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\
+                (?=.*[!@#\$%\^&\*])", password):
                 return make_response(jsonify({
                     "status": 400,
                     "error": "Password must have atleast one uppercase,\
@@ -57,11 +58,6 @@ class UserRegister():
                                               "status": 400}), 400)
 
             user.register_user()
-
-            # expires = datetime.timedelta(minutes=120)
-            # # token = create_access_token(identity=user.serialize(),
-            # #                             expires_delta=expires)
-            # token = jwt.
 
             user_object = []
             user = {
@@ -101,22 +97,23 @@ class LoginUser():
             password = data['password']
 
             signeduser = UserModel(email, password)
-            # signeduser.get_user_by_email(email)
 
             loged_user = signeduser.get_user_by_email(email)
+            isAdmin = loged_user["isadmin"]
 
             if not loged_user:
                 return make_response(jsonify({"status": 404,
-                                              "Error": "The email you entered doesnt exist"}), 404)
+                                              "Error": "The email you entered\
+                                                  doesnt exist"}), 404)
             if not check_password_hash(loged_user["password"], password):
                 return make_response(jsonify({"status": 404,
-                                              "Error": "The password you entered doesnt exist"}), 404)
+                                              "Error": "The password you\
+                                                  entered doesnt exist"}), 404)
 
             expires = datetime.datetime.utcnow() + datetime.timedelta(minutes=120)
             token = jwt.encode(
-                {'email': email, 'exp': expires}, os.getenv('SECRET_KEY'))
-            # token = create_access_token(identity=signeduser.serialize(),
-            #                             expires_delta=expires)
+                {'email': email, 'isAdmin': isAdmin,
+                    'exp': expires}, os.getenv('SECRET_KEY'))
             userlogin_object = []
             user = {
                 "email": email,

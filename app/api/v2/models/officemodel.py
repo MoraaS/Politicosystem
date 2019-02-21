@@ -43,3 +43,12 @@ class OfficeModel(Database):
         offices = self.curr.fetchone()
         self.save()
         return json.dumps(offices, default=str)
+
+    def get_office_by_name(self, name):
+        """Retrieve office with specific name."""
+        self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
+        self.curr.execute(""" SELECT * FROM office
+        \WHERE office.name = '{}';""".format(name))
+        office_name = self.curr.fetchone()
+        self.save()
+        return office_name
