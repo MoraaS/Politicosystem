@@ -63,6 +63,12 @@ class Database:
                 name VARCHAR(50) NOT NULL,
                 hqaddress VARCHAR(50) NOT NULL,
                 logourl VARCHAR(50) NOT NULL
+            );""",
+            """CREATE TABLE IF NOT EXISTS candidates(
+                id SERIAL PRIMARY KEY NOT NULL,
+                office_id INTEGER NOT NULL,
+                party_id INTEGER NOT NULL,
+                candidate_id INTEGER NOT NULL
             );"""
         ]
         try:
@@ -78,7 +84,8 @@ class Database:
         office = "DROP TABLE IF EXISTS office CASCADE"
         voters = "DROP TABLE IF EXISTS voters CASCADE"
         parties = "DROP TABLE IF EXISTS voters CASCADE"
-        queries = [users, office, voters, parties]
+        candidates = "DROP TABLE IF EXISTS voters CASCADE"
+        queries = [users, office, voters, parties, candidates]
         try:
             for query in queries:
                 self.curr.execute(query)

@@ -17,6 +17,7 @@ class TestUsers(BaseTestCase):
             "phonenumber": "0713452678",
             "password": "Password123",
             "passporturl": "passporturl"
+            "isAdmin": False
         }
 
         response = self.post(
