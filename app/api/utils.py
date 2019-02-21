@@ -81,7 +81,7 @@ def validate_login(request):
 
 def validate_parties(request):
     data = request.get_json()
-    
+
     errors = []
     party_keys = ["name", "hqaddress", "logourl"]
 
@@ -133,6 +133,38 @@ def validate_office(request):
 
     if data['office_type'].strip() == "":
         error = {"office_type": "Provide the office type"}
+        errors.append(error)
+
+    return errors
+
+
+def validate_votes(request):
+    data = request.get_json()
+
+    errors = []
+    voters_keys = ["createdby", "office_id", "candidate_id"]
+
+    for key in voters_keys:
+
+        if key not in request.json:
+
+            error = {key: "Field must be provided"}
+
+            errors.append(error)
+
+    if errors:
+        return errors
+
+    if data['createdby'].strip() == "":
+        error = {"createdby": "Provide your voters id"}
+        errors.append(error)
+
+    if data['office_id'].strip() == "":
+        error = {"office_id": "Enter the office id you want to vote for"}
+        errors.append(error)
+
+    if data['candidate_id'].strip() == "":
+        error = {"candidate_id": "Provide the the id youre voting for"}
         errors.append(error)
 
     return errors

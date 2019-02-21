@@ -1,33 +1,60 @@
 import re
 from flask import Blueprint, make_response, request, jsonify
 import json
+from app.api.v2.models.candidates import CandidatesModel
 from app.api.v2.models.officemodel import OfficeModel
 from app.api.v2.models.votermodel import VoteModel
-from flask_jwt_extended import (create_access_token,
-                                jwt_required, get_jwt_identity)
+from app.api.v2.models.usermodel import UserModel
+from app.api.utils import login_required, validate_votes
 
 vote_v2 = Blueprint('vote', __name__, url_prefix='/api/v2/')
 
 
 @vote_v2.route('/vote', methods=['POST'])
+# @login_required
 def new_vote():
-    data = request.get_json()
+    errors = validate_votes(request)
+    if not errors:
 
-    try:
+        data = request.get_json()
 
-        office = data["office"]
-        candidate = data["candidate"]
-        voter = data["voter"]
+        createdby = data["createdby"]
+        office_id = data["office_id"]
+        candidate_id = data["candidate_id"]
 
-    except:
+        if not UserModel().get_user_by_id(createdby):
+            return make_response(jsonify({
+                "status": 404,
+                "error": "Voter doesn't exist"
+            }), 400)
+        # check if office exists
+        if not OfficeModel().get_by_id(office_id):
+            return make_response(jsonify({
+                "status": 404,
+                "error": "Office doesn't exist"
+            }), 400)
 
-        return make_response(jsonify({
-            "status": 400,
-            "error": "Not all fields are provided"
-        }), 400)
+        # check if candidate exists
+        if not CandidatesModel().get_by_id(candidate_id):
+            return make_response(jsonify({
+                "status": 404,
+                "error": "Candidate doesn't exist"
+            }), 400)
 
         newvote = VoteModel()
-        newvote.create_new_vote(office, candidate, voter)
 
-    return make_response(jsonify({'status': 201,
-                                  'message': 'Vote Casted Successfully'}), 201)
+        if newvote.check_if_voter_voted(createdby, office_id):
+            return make_response(jsonify({
+                                    "status": 409,
+                                    "error": "Voter already voted"
+                                    }), 409)
+        newvote.create_new_vote(createdby, office_id, candidate_id)
+
+        return make_response(jsonify({'status': 201,
+                                        'message': 'Vote Casted Successfully'}), 201)
+
+    else:
+        return make_response(jsonify({"errors": errors,
+                                      "status": 400
+
+                                      }), 400)

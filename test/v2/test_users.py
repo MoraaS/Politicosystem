@@ -15,8 +15,8 @@ class TestUsers(BaseTestCase):
             "othername": "maranga",
             "email": "salmamaranga@gmail.com",
             "phonenumber": "0713452678",
-            "password": "Password123",
-            "passporturl": "passporturl"
+            "password": "Password@123",
+            "passporturl": "passporturl",
             "isAdmin": False
         }
 

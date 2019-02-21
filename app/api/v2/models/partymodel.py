@@ -19,9 +19,7 @@ class PartyModel(Database):
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
         self.curr.execute(
             '''
-        INSERT INTO parties(name, hqaddress, logourl) VALUES
-        ('{}','{}','{}') RETURNING name, hqaddress, logourl'''
-            .format(name, hqaddress, logourl))
+        INSERT INTO parties(name, hqaddress, logourl) VALUES('{}','{}','{}') RETURNING name, hqaddress, logourl'''.format(name, hqaddress, logourl))
         new_party = self.curr.fetchone()
         self.save()
         return new_party
@@ -42,7 +40,7 @@ class PartyModel(Database):
     def get_party_by_name(self, name):
         """Retrieve party with specific name."""
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
-        self.curr.execute(""" SELECT * FROM parties\WHERE parties.name = '{}';""".format(name))
+        self.curr.execute(""" SELECT * FROM parties WHERE parties.name = '{}';""".format(name))
         party_name = self.curr.fetchone()
         self.save()
         return party_name
