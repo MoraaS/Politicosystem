@@ -101,7 +101,6 @@ def register_candidate(office_id):
 
     user = UserModel()
     user_id = user.get_user_by_id(candidate_id)
-    print(user_id)
 
     if not user_id:
         return make_response(jsonify({

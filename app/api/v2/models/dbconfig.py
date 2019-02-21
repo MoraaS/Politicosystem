@@ -83,8 +83,8 @@ class Database:
         users = "DROP TABLE IF EXISTS users CASCADE"
         office = "DROP TABLE IF EXISTS office CASCADE"
         voters = "DROP TABLE IF EXISTS voters CASCADE"
-        parties = "DROP TABLE IF EXISTS voters CASCADE"
-        candidates = "DROP TABLE IF EXISTS voters CASCADE"
+        parties = "DROP TABLE IF EXISTS parties CASCADE"
+        candidates = "DROP TABLE IF EXISTS candidates CASCADE"
         queries = [users, office, voters, parties, candidates]
         try:
             for query in queries:
