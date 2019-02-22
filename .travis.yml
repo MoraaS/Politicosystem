@@ -9,6 +9,8 @@ services:
   - postgresql
 before script:
   - psql -c 'create database politicosys_test;' -U
+env:
+  - SECRET_KEY=ikeepgoing
 script:
   - coverage run --source=app -m pytest && coverage report
   - coveralls
