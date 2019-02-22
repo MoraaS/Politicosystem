@@ -11,7 +11,7 @@ vote_v2 = Blueprint('vote', __name__, url_prefix='/api/v2/')
 
 
 @vote_v2.route('/vote', methods=['POST'])
-# @login_required
+@login_required
 def new_vote():
     '''Function for creatig a new vote'''
     errors = validate_votes(request)

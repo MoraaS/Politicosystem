@@ -92,3 +92,25 @@ def delete_party(party_id):
         PartyModel().delete_party(party_id)
         return make_response(jsonify({"message": "The party has been deleted"}), 200)
     return make_response(jsonify({"message": "party not found"}), 200)
+
+
+@party_v2.route('/parties/<int:party_id>/edit', methods=['PUT'])
+@admin_required
+def edit_party(party_id):
+    '''Function to edit parties'''
+    errors = validate_parties(request)
+    if not errors:
+
+        data = request.get_json()
+        name = data['name']
+        hqaddress = data['hqaddress']
+        logourl = data['logourl']
+
+        party = PartiesModel().edit_party(name, hqAddress, logoUrl, party_id)
+        if party:
+            return make_response(jsonify({"message": "The party has been updated successfully"}), 200)
+        return make_response(jsonify({"error": "The party could not be found"}), 404)
+
+    else:
+        return make_response(jsonify({"errors": errors,
+                                      "status": 400}), 400)
