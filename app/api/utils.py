@@ -181,12 +181,12 @@ def login_required(fn):
         if "Authorization" in request.headers:
             token = request.headers['Authorization']
         else:
-            return make_response(jsonify({"error": "Token is missingrequired for this method"}), 403)
+            return make_response(jsonify({"error": "This method requires you to enter a token"}), 403)
 
         try:
             data = jwt.decode(token, os.getenv('SECRET_KEY'))
         except Exception as e:
-            return make_response(jsonify({"message": "Token Required"}))
+            return make_response(jsonify({"message": "Token is required to access the method"}))
 
         return fn(*args, **kwargs)
     return token_decorator
@@ -200,16 +200,15 @@ def admin_required(fn):
         if "Authorization" in request.headers:
             token = request.headers['Authorization']
         else:
-            return make_response(jsonify({"error": "Admin Token is required for this method missing"}), 403)
+            return make_response(jsonify({"error": "Admin Token is required in order to access the method"}), 403)
 
         try:
             data = jwt.decode(token, os.getenv('SECRET_KEY'))
             if data['isAdmin'] != True:
 
-                return make_response(jsonify({"message": "To access the method \
-                    admin token is required"}), 403)
+                return make_response(jsonify({"message": "To access the method admin token is required"}), 403)
         except Exception as e:
-            return make_response(jsonify({"message": "token is invalid"}), 403)
+            return make_response(jsonify({"message": "token is invalid, put in the assigned token"}), 403)
 
         return fn(*args, **kwargs)
     return admin_decorator

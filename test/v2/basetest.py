@@ -14,6 +14,77 @@ class BaseTestCase(unittest.TestCase):
         self.app_context = self.app.app_context()
         self.app_context.push()
 
+        self.admin_data = {
+            "firstname": "salma",
+            "lastname": "moraa",
+            "othername": "maranga",
+            "email": "salmamaranga@gmail.com",
+            "phonenumber": "0713452678",
+            "password": "Password@123",
+            "passporturl": "passporturl",
+            "isAdmin": True
+        }
+
+        self.user_data = {
+            "firstname": "John",
+            "lastname": "Doe",
+            "othername": "Donald",
+            "email": "johndoe@gmail.com",
+            "phonenumber": "0713452678",
+            "password": "Password@123",
+            "passporturl": "passporturl",
+            "isAdmin": False
+        }
+
+        self.parties_data = {
+            "name": "republican",
+            "hqaddress": "washington",
+            "logourl": "photo.com"
+        }
+
+        self.office_data = {
+            "name": "senator",
+            "office_type": "state"
+        }
+
+    def admin_token(self):
+        # create admin
+        self.post(
+            "api/v2/auth/signup", data=self.admin_data)
+        # login to get token
+        response = self.post(
+            "api/v2/auth/login", data={"email": "salmamaranga@gmail.com",
+                                       "password": "Password@123"})
+        return response.json['data'][0]['token']
+
+    def create_party(self, party):
+        auth_header = {"Authorization": "" + self.admin_token()}
+        response = self.client.post(path='/api/v2/parties',
+                                    data=json.dumps(party),
+                                    content_type='application/json',
+                                    headers=auth_header)
+        return response
+
+    def create_office(self, office_data):
+        auth_header = {"Authorization": "" + self.admin_token()}
+        response = self.client.post(path='/api/v2/offices',
+                                    data=json.dumps(office_data),
+                                    content_type='application/json',
+                                    headers=auth_header)
+        return response
+
+    def create_candidate(self, office_id, party_id, user_id):
+        auth_header = {"Authorization": "" + self.admin_token()}
+        data = {
+            "party_id": party_id,
+            "candidate_id": user_id
+        }
+        response = self.client.post(path="api/v2/offices/{}/register".format(office_id),
+                                    data=json.dumps(data),
+                                    headers=auth_header,
+                                    content_type='application/json')
+        return response
+
     def get(self, url):
         return self.client.get(url, content_type="application/json")
 

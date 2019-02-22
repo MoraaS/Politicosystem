@@ -58,6 +58,11 @@ class UserRegister():
 
             user.register_user()
 
+            expires = datetime.datetime.utcnow() + datetime.timedelta(minutes=120)
+            token = jwt.encode(
+                {'email': email, 'isAdmin': isAdmin,
+                    'exp': expires}, os.getenv('SECRET_KEY'))
+
             user_object = []
             user = {
                 "firstname": firstname,
@@ -74,7 +79,7 @@ class UserRegister():
             return make_response(jsonify({
                 "status": 201,
                 "message": "Account Created Successfully",
-                "data": [user_object]}), 201)
+                "data": [{"token": token.decode('UTF-8')}, user_object]}), 201)
 
         else:
             return make_response(jsonify({"errors": errors,

@@ -40,7 +40,8 @@ class PartyModel(Database):
     def get_party_by_name(self, name):
         """Retrieve party with specific name."""
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
-        self.curr.execute(""" SELECT * FROM parties WHERE parties.name = '{}';""".format(name))
+        self.curr.execute(
+            """ SELECT * FROM parties WHERE parties.name = '{}';""".format(name))
         party_name = self.curr.fetchone()
         self.save()
         return party_name
@@ -61,3 +62,11 @@ class PartyModel(Database):
         self.curr.execute(
             """DELETE FROM parties WHERE party_id='{}';""".format(party_id))
         self.save()
+
+    def update_party(self, party_id, name, hqAddress, logoUrl):
+        """Admi can alter name of party."""
+        self.curr.execute("""UPDATE parties SET name='{}', hqAddress='{}',\
+        logoUrl='{}'WHERE party_id={} RETURNING name, hqAddress, logoUrl""".format(party_id, name, hqAddress, logoUrl))
+        party = self.curr.fetchone()
+        self.save()
+        return party
