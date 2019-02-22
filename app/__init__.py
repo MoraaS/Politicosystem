@@ -27,7 +27,7 @@ def deal_with_wrong_url(e):
     return make_response(
         jsonify(
             {
-                "error": "The URL you entered can't be found",
+                "error": "The URL you entered can't be found try entering the right format",
                 "status": 400
             }
         ), 400

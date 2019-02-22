@@ -88,7 +88,7 @@ class UserRegister():
                                           }), 400)
 
 
-class LoginUser():
+class UserLogin():
 
     @login.route('/login', methods=['POST'])
     def login():
