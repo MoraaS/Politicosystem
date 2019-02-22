@@ -27,7 +27,7 @@ def deal_with_wrong_url(e):
     return make_response(
         jsonify(
             {
-                "error": "The URL you entered can't be found",
+                "error": "The URL you entered can't be found, try checking for the right format",
                 "status": 400
             }
         ), 400
@@ -43,14 +43,6 @@ def deal_with_wrong_method(e):
             }
         ), 405
     )
-
-
-
-# @app.route('/')
-# def home():
-#     '''Function to initialize the home route'''
-#     return "WELCOME TO POLITICO V1"
-# jwt = JWTManager()
 
 
 def create_app(config_name):
