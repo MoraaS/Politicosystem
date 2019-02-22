@@ -69,17 +69,17 @@ class TestUsers(BaseTestCase):
         response = self.get("api/v2/offices/{}".format(office_id))
         self.assertEqual(response.status_code, 404)
 
-    def test_register_candidate_in_null_office(self):
-        auth_header = {"Authorization": "" + self.admin_token()}
+    # def test_register_candidate_in_null_office(self):
+    #     auth_header = {"Authorization": "" + self.admin_token()}
 
-        data = {
-            "party_id": 1,
-            "candidate_id": 1
-        }
-        response = self.client.post(path="api/v2/offices/{}/register".format(12),
-                                    data=json.dumps(data),
-                                    headers=auth_header,
-                                    content_type='application/json')
-        self.assertEqual(response.status_code, 404)
+    #     data = {
+    #         "party_id": 1,
+    #         "candidate_id": 1
+    #     }
+    #     response = self.client.post(path="api/v2/offices/{}/register".format(12),
+    #                                 data=json.dumps(data),
+    #                                 headers=auth_header,
+    #                                 content_type='application/json')
+    #     self.assertEqual(response.status_code, 404)
 
 
