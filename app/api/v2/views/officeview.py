@@ -120,7 +120,8 @@ def register_candidate(office_id):
         new_cand = CandidatesModel().create(office_id, party_id, candidate_id)
         return make_response(jsonify({
             "status": 202,
-            "data": new_cand
+            "data": new_cand,
+            "message": "You have successfully registered the candidate"
         }), 202)
 
 
@@ -138,8 +139,9 @@ def election_results(office_id):
         if results:
             return make_response(jsonify({
                 "status": 200,
-                "results": results
-            }))
+                "Number of votes": results,
+                "message": "This are all the results for this office"
+            }), 200)
     return make_response(jsonify({
         "status": 200,
         "error": "results not found"

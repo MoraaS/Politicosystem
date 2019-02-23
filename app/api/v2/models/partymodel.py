@@ -69,4 +69,4 @@ class PartyModel(Database):
         logoUrl='{}'WHERE party_id={} RETURNING name, hqAddress, logoUrl""".format(party_id, name, hqAddress, logoUrl))
         party = self.curr.fetchone()
         self.save()
-        return party
+        return "party"

@@ -181,12 +181,12 @@ def login_required(fn):
         if "Authorization" in request.headers:
             token = request.headers['Authorization']
         else:
-            return make_response(jsonify({"error": "This method requires you to enter a token"}), 403)
+            return make_response(jsonify({"error": "This method requires you to enter a login token"}), 403)
 
         try:
             data = jwt.decode(token, os.getenv('SECRET_KEY'))
         except Exception as e:
-            return make_response(jsonify({"message": "Token is required to access the method"}))
+            return make_response(jsonify({"message": "Login Token is required to access the method"}))
 
         return fn(*args, **kwargs)
     return token_decorator

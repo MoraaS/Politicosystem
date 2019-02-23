@@ -105,9 +105,10 @@ def edit_party(party_id):
         name = data['name']
         hqaddress = data['hqaddress']
         logourl = data['logourl']
-
-        party = PartiesModel().edit_party(name, hqAddress, logoUrl, party_id)
-        if party:
+        p = PartyModel().get_party_by_id(party_id)
+        print(p)
+        if p:
+            party = PartiesModel().update_party(name, hqaddress, logourl, party_id)
             return make_response(jsonify({"message": "The party has been updated successfully"}), 200)
         return make_response(jsonify({"error": "The party could not be found"}), 404)
 
