@@ -15,12 +15,12 @@ class BaseTestCase(unittest.TestCase):
         self.app_context.push()
 
         self.admin_data = {
-            "firstname": "salma",
-            "lastname": "moraa",
-            "othername": "maranga",
-            "email": "salmamaranga@gmail.com",
-            "phonenumber": "0713452678",
-            "password": "Password@123",
+            "firstname": "Salma",
+            "lastname": "Moraa",
+            "othername": "Maranga",
+            "email": "saladmin@gmail.com",
+            "phonenumber": "0713623572",
+            "password": "Salmaadmin@123",
             "passporturl": "passporturl",
             "isAdmin": True
         }
@@ -50,11 +50,11 @@ class BaseTestCase(unittest.TestCase):
     def admin_token(self):
         # create admin
         self.post(
-            "api/v2/auth/signup", data=self.admin_data)
+            "api/v2/auth/admin", data=self.admin_data)
         # login to get token
         response = self.post(
-            "api/v2/auth/login", data={"email": "salmamaranga@gmail.com",
-                                       "password": "Password@123"})
+            "api/v2/auth/login", data={"email": "saladmin@gmail.com",
+                                       "password": "Salmaadmin@123"})
         return response.json['data'][0]['token']
 
     def create_party(self, party):
