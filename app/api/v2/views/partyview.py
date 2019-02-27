@@ -94,7 +94,7 @@ def delete_party(party_id):
     if deleted_party:
         PartyModel().delete_party(party_id)
         return make_response(jsonify({"message": "The party has been deleted"}), 200)
-    return make_response(jsonify({"message": "party not found"}), 200)
+    return make_response(jsonify({"message": "party not found"}), 404)
 
 
 @party_v2.route('/parties/<int:party_id>/name', methods=['PATCH'])
@@ -108,11 +108,11 @@ def edit_party(party_id):
     name = edit_party['name']
 
     edited_party = PartyModel().get_party_by_id(party_id)
+    edited_party = json.loads(edited_party)
     print(edited_party)
 
     if edited_party:
-        new_party = PartyModel()
-        new_party.update_party(name, party_id)
+        new_party = PartyModel().update_party(name, party_id)
         party_object = []
         party = {
 
@@ -123,14 +123,4 @@ def edit_party(party_id):
         return make_response(jsonify({"status": 200,
                                       "message": "party has been updated successfully"},
                                      party_object), 200)
-    return make_response(jsonify({"status": 404, "error": "The party is not available"}), 404)
-
-    # else:
-    #     return make_response(jsonify({"errors": errors,
-    #                                   "status": 400}), 400)
-
-    #    if edited_party:
-    #         return make_response(jsonify({"status": 200,
-    #                                       "message": "The party has been updated successfully",
-    #                                       "Edited_party": edited_party}), 200)
-    #     return make_response(jsonify({"error": "The party could not be found"}), 404)
+    return make_response(jsonify({"status": 404, "error": "The party does not exist"}), 404)

@@ -20,16 +20,11 @@ class UserModel(Database):
 
     def register_user(self):
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
-        self.curr.execute(
-            '''
-        INSERT INTO users(firstname, lastname, othername, email, phonenumber,
-        password, passporturl, isAdmin)
-        VALUES ('{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname,
-        lastname, othername, email, phonenumber, password, passporturl, isAdmin'''
-            .format(self.firstname, self.lastname, self.othername, self.email, self.phonenumber, self.password, self.passporturl, self.isAdmin))
-        user = self.curr.fetchone()
-        self.save()
-        return user
+        new_user = '''INSERT INTO users(firstname, lastname, othername, email,\
+            phonenumber,password, passporturl, isAdmin)\
+                VALUES ('{}','{}','{}','{}','{}','{}','{}','{}') RETURNING firstname,
+        lastname, othername, email, phonenumber, password, passporturl, isAdmin'''.format(self.firstname, self.lastname, self.othername, self.email, self.phonenumber, self.password, self.passporturl, self.isAdmin)
+        return Database().query_data(new_user)
 
     def get_user_by_email(self, email):
         """Get user by their email"""

@@ -36,11 +36,8 @@ class PartyModel(Database):
     def get_party_by_name(self, name):
         """Retrieve party with specific name."""
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
-        self.curr.execute(
-            """ SELECT * FROM parties WHERE parties.name = '{}';""".format(name))
-        party_name = self.curr.fetchone()
-        self.save()
-        return party_name
+        party_name = """ SELECT * FROM parties WHERE parties.name = '{}';""".format(name)
+        return Database().query_data(party_name)
 
     def get_party_by_id(self, party_id):
         '''Defining method to get
