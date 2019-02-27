@@ -15,15 +15,11 @@ class OfficeModel(Database):
 
     def create(self, name, office_type):
         """create office admin only function"""
-        self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
-        self.curr.execute(
-            '''
+        query = '''
         INSERT INTO office(name, office_type) VALUES
-        ('{}','{}') RETURNING name, office_type'''
-            .format(name, office_type))
-        office = self.curr.fetchone()
-        self.save()
-        return office
+        ('{}','{}') RETURNING name, office_type'''.format(name, office_type)
+        return Database().query_data(query)
+        
 
     def get_all_offices(self):
         """
@@ -49,7 +45,8 @@ class OfficeModel(Database):
     def get_office_by_name(self, name):
         """Retrieve office with specific name."""
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
-        self.curr.execute(""" SELECT * FROM office WHERE office.name = '{}';""".format(name))
+        self.curr.execute(
+            """ SELECT * FROM office WHERE office.name = '{}';""".format(name))
         office_name = self.curr.fetchone()
         self.save()
         return office_name

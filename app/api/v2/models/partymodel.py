@@ -16,13 +16,9 @@ class PartyModel(Database):
 
     def create(self, name, hqaddress, logourl):
         """create party admin only function"""
-        self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
-        self.curr.execute(
-            '''
-        INSERT INTO parties(name, hqaddress, logourl) VALUES('{}','{}','{}') RETURNING name, hqaddress, logourl'''.format(name, hqaddress, logourl))
-        new_party = self.curr.fetchone()
-        self.save()
-        return new_party
+        create_party = '''INSERT INTO parties(name, hqaddress, logourl) VALUES('{}','{}','{}')\
+            RETURNING name, hqaddress, logourl'''.format(name, hqaddress, logourl)
+        return Database().query_data(create_party)
 
     def get_all_parties(self):
         """
@@ -40,11 +36,8 @@ class PartyModel(Database):
     def get_party_by_name(self, name):
         """Retrieve party with specific name."""
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
-        self.curr.execute(
-            """ SELECT * FROM parties WHERE parties.name = '{}';""".format(name))
-        party_name = self.curr.fetchone()
-        self.save()
-        return party_name
+        party_name = """ SELECT * FROM parties WHERE parties.name = '{}';""".format(name)
+        return Database().query_data(party_name)
 
     def get_party_by_id(self, party_id):
         '''Defining method to get
@@ -63,10 +56,11 @@ class PartyModel(Database):
             """DELETE FROM parties WHERE party_id='{}';""".format(party_id))
         self.save()
 
-    def update_party(self, party_id, name, hqAddress, logoUrl):
-        """Admi can alter name of party."""
-        self.curr.execute("""UPDATE parties SET name='{}', hqAddress='{}',\
-        logoUrl='{}'WHERE party_id={} RETURNING name, hqAddress, logoUrl""".format(party_id, name, hqAddress, logoUrl))
-        party = self.curr.fetchone()
-        self.save()
-        return "party"
+    def update_party(self, name, party_id):
+        """Admin can alter name of party."""
+        self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
+        self.curr.execute(
+            """UPDATE parties SET name='{}' WHERE parties.party_id='{}'; """.format(name, party_id
+                                                                                    ))
+        self.conn.commit()
+        self.curr.close()

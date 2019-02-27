@@ -32,6 +32,13 @@ class Database:
         self.conn.commit()
         self.curr.close()
 
+    def query_data(self, query):
+        self.curr.execute(query)
+        data = self.curr.fetchone()
+        self.save()
+        return data
+        
+
     def create_tables(self):
         queries = [
             """

@@ -40,14 +40,3 @@ class VoteModel(Database):
         results = self.curr.fetchall()
         self.save()
         return results
-
-    # def get_results_by_office_id(self, office):
-    #     self.curr.execute("""
-    #     SELECT office, candidate, count(voter) as result 
-    #     FROM votes
-    #     WHERE office={}
-    #     GROUP BY office, candidate
-    #     """.format(office))
-    #     results = self.curr.fetchall()
-    #     self.save()
-    #     return results

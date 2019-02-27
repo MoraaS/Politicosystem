@@ -11,7 +11,7 @@ import os
 
 signup = Blueprint('signup', __name__, url_prefix='/api/v2/auth/')
 login = Blueprint('login', __name__, url_prefix='/api/v2/auth/')
-
+admin = Blueprint('admin', __name__, url_prefix='/api/v2/auth/')
 
 class UserRegister():
 
@@ -30,7 +30,13 @@ class UserRegister():
             phonenumber = data['phonenumber']
             password = data['password']
             passporturl = data['passporturl']
-            isAdmin = data['isAdmin']
+            isAdmin = False
+
+            if data['firstname'].isalpha() is False:
+                return make_response(jsonify({"status": 400, "message": "firstname should be alphabets"}), 400)
+
+            if data['lastname'].isalpha() is False:
+                return make_response(jsonify({"status": 400, "message": "lastname should be alphabets"}), 400)
 
             if (len(password) < 8):
                 return make_response(jsonify({
@@ -138,3 +144,50 @@ class LoginUser():
                                           "status": 400
 
                                           }), 400)
+
+
+class RegisterAdmin():
+
+    @admin.route('/admin', methods=['POST'])
+    def signup_admin():
+        '''Function of creating initial superuser'''
+        firstname = "Salma"
+        lastname = "Moraa"
+        othername = "Maranga"
+        email = "saladmin@gmail.com"
+        phonenumber = "0713623572"
+        password = "Salmaadmin@123"
+        passporturl = "passporturl"
+        isAdmin = True
+
+        user = UserModel(firstname, lastname, othername,
+                         email, phonenumber, password, passporturl, isAdmin)
+
+        if user.get_user_by_email(email):
+            return make_response(jsonify({"error": "An Admin already exists",
+                                          "status": 400}), 400)
+
+        user.register_user()
+
+        expires = datetime.datetime.utcnow() + datetime.timedelta(minutes=120)
+        token = jwt.encode(
+            {'email': email, 'isAdmin': isAdmin,
+                'exp': expires}, os.getenv('SECRET_KEY'))
+
+        user_object = []
+        user = {
+            "firstname": firstname,
+            "lastname": lastname,
+            "othername": othername,
+            "email": email,
+            "phonenumber": phonenumber,
+            "password": password,
+            "passporturl": passporturl,
+            "isAdmin": isAdmin
+        }
+        user_object.append(user)
+
+        return make_response(jsonify({
+            "status": 201,
+            "message": "Admin Created Successfully",
+            "data": [{"token": token.decode('UTF-8')}, user_object]}), 201)

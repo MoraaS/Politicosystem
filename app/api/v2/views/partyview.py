@@ -20,6 +20,9 @@ def create_party():
         hqaddress = data['hqaddress']
         logourl = data['logourl']
 
+        if data['name'].isalpha() is False:
+            return make_response(jsonify({"status": 400, "message": "name should be alphabets"}), 400)
+
         if (len(name) < 6):
             return make_response(jsonify({
                 "status": 400,
@@ -91,27 +94,33 @@ def delete_party(party_id):
     if deleted_party:
         PartyModel().delete_party(party_id)
         return make_response(jsonify({"message": "The party has been deleted"}), 200)
-    return make_response(jsonify({"message": "party not found"}), 200)
+    return make_response(jsonify({"message": "party not found"}), 404)
 
 
-@party_v2.route('/parties/<int:party_id>/edit', methods=['PUT'])
+@party_v2.route('/parties/<int:party_id>/name', methods=['PATCH'])
 @admin_required
 def edit_party(party_id):
     '''Function to edit parties'''
-    errors = validate_parties(request)
-    if not errors:
+    # errors = validate_parties(request)
+    # if not errors:
 
-        data = request.get_json()
-        name = data['name']
-        hqaddress = data['hqaddress']
-        logourl = data['logourl']
-        p = PartyModel().get_party_by_id(party_id)
-        print(p)
-        if p:
-            party = PartiesModel().update_party(name, hqaddress, logourl, party_id)
-            return make_response(jsonify({"message": "The party has been updated successfully"}), 200)
-        return make_response(jsonify({"error": "The party could not be found"}), 404)
+    edit_party = request.get_json()
+    name = edit_party['name']
 
-    else:
-        return make_response(jsonify({"errors": errors,
-                                      "status": 400}), 400)
+    edited_party = PartyModel().get_party_by_id(party_id)
+    edited_party = json.loads(edited_party)
+    print(edited_party)
+
+    if edited_party:
+        new_party = PartyModel().update_party(name, party_id)
+        party_object = []
+        party = {
+
+            "name": name,
+            "party_id": party_id
+        }
+        party_object.append(party)
+        return make_response(jsonify({"status": 200,
+                                      "message": "party has been updated successfully"},
+                                     party_object), 200)
+    return make_response(jsonify({"status": 404, "error": "The party does not exist"}), 404)
