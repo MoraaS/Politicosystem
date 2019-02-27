@@ -39,7 +39,6 @@ class UserModel(Database):
             '''.format(email))
         user_email = self.curr.fetchone()
         self.save()
-        print(user_email)
         return user_email
 
     def get_phoneNumber(self, phoneNumber):

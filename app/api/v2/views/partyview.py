@@ -101,30 +101,33 @@ def delete_party(party_id):
 @admin_required
 def edit_party(party_id):
     '''Function to edit parties'''
-    errors = validate_parties(request)
-    if not errors:
+    # errors = validate_parties(request)
+    # if not errors:
 
-        edit_party = request.get_json()
-        name = edit_party['name']
+    edit_party = request.get_json()
+    name = edit_party['name']
 
-        edited_party = PartyModel().get_party_by_id(party_id)
-        print(edited_party)
+    edited_party = PartyModel().get_party_by_id(party_id)
+    print(edited_party)
 
-        if edited_party:
-            PartyModel.update_party(party_id, name)
-            party_object = []
-            party = {
-                "name": name,
-                "id": party_id,
-            }
-            party_object.append(party)
-            return make_response(jsonify({"status": 200, "message":
-                                          "party has been updated successfully"}, party_object), 200)
-        return make_response(jsonify({"status": 404, "error": "The party is not available"}), 404)
+    if edited_party:
+        new_party = PartyModel()
+        new_party.update_party(name, party_id)
+        party_object = []
+        party = {
 
-    else:
-        return make_response(jsonify({"errors": errors,
-                                      "status": 400}), 400)
+            "name": name,
+            "party_id": party_id
+        }
+        party_object.append(party)
+        return make_response(jsonify({"status": 200,
+                                      "message": "party has been updated successfully"},
+                                     party_object), 200)
+    return make_response(jsonify({"status": 404, "error": "The party is not available"}), 404)
+
+    # else:
+    #     return make_response(jsonify({"errors": errors,
+    #                                   "status": 400}), 400)
 
     #    if edited_party:
     #         return make_response(jsonify({"status": 200,

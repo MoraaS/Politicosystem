@@ -6,6 +6,7 @@ from app.api.v1.views.officeView import office_endpoints
 from app.api.v1.views.partyView import party_endpoints
 from app.api.v2.views.userview import signup
 from app.api.v2.views.userview import login
+from app.api.v2.views.userview import admin
 from app.api.v2.views.officeview import office_v2
 from app.api.v2.views.voterview import vote_v2
 from app.api.v2.views.partyview import party_v2
@@ -59,6 +60,7 @@ def create_app(config_name):
     app.register_blueprint(party_endpoints)
     app.register_blueprint(signup)
     app.register_blueprint(login)
+    app.register_blueprint(admin)
     app.register_blueprint(office_v2)
     app.register_blueprint(vote_v2)
     app.register_blueprint(party_v2)

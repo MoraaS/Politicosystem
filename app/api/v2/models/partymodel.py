@@ -16,13 +16,9 @@ class PartyModel(Database):
 
     def create(self, name, hqaddress, logourl):
         """create party admin only function"""
-        self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
-        self.curr.execute(
-            '''
-        INSERT INTO parties(name, hqaddress, logourl) VALUES('{}','{}','{}') RETURNING name, hqaddress, logourl'''.format(name, hqaddress, logourl))
-        new_party = self.curr.fetchone()
-        self.save()
-        return new_party
+        create_party = '''INSERT INTO parties(name, hqaddress, logourl) VALUES('{}','{}','{}')\
+            RETURNING name, hqaddress, logourl'''.format(name, hqaddress, logourl)
+        return Database().query_data(create_party)
 
     def get_all_parties(self):
         """
@@ -63,12 +59,11 @@ class PartyModel(Database):
             """DELETE FROM parties WHERE party_id='{}';""".format(party_id))
         self.save()
 
-    def update_party(self, party_id, name):
+    def update_party(self, name, party_id):
         """Admin can alter name of party."""
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
         self.curr.execute(
-            """UPDATE parties SET name='{}' WHERE parties.party_id='{}' """.format(party_id, name))
-        party = self.curr.fetchone()
+            """UPDATE parties SET name='{}' WHERE parties.party_id='{}'; """.format(name, party_id
+                                                                                    ))
         self.conn.commit()
         self.curr.close()
-        return party
