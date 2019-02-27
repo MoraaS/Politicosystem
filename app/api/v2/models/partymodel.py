@@ -63,10 +63,12 @@ class PartyModel(Database):
             """DELETE FROM parties WHERE party_id='{}';""".format(party_id))
         self.save()
 
-    def update_party(self, party_id, name, hqAddress, logoUrl):
-        """Admi can alter name of party."""
-        self.curr.execute("""UPDATE parties SET name='{}', hqAddress='{}',\
-        logoUrl='{}'WHERE party_id={} RETURNING name, hqAddress, logoUrl""".format(party_id, name, hqAddress, logoUrl))
+    def update_party(self, party_id, name):
+        """Admin can alter name of party."""
+        self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
+        self.curr.execute(
+            """UPDATE parties SET name='{}' WHERE parties.party_id='{}' """.format(party_id, name))
         party = self.curr.fetchone()
-        self.save()
-        return "party"
+        self.conn.commit()
+        self.curr.close()
+        return party

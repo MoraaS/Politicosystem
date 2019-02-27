@@ -21,6 +21,9 @@ def create_office():
         name = data['name']
         office_type = data['office_type']
 
+        if data['name'].isalpha() is False:
+                return make_response(jsonify({"status": 400, "message": "name should be alphabets"}), 400)
+
         if (len(name) < 6):
             return make_response(jsonify({
                 "status": 400,

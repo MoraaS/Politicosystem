@@ -32,6 +32,12 @@ class UserRegister():
             passporturl = data['passporturl']
             isAdmin = data['isAdmin']
 
+            if data['firstname'].isalpha() is False:
+                return make_response(jsonify({"status": 400, "message": "firstname should be alphabets"}), 400)
+
+            if data['lastname'].isalpha() is False:
+                return make_response(jsonify({"status": 400, "message": "lastname should be alphabets"}), 400)
+
             if (len(password) < 8):
                 return make_response(jsonify({
                     "status": 400,
