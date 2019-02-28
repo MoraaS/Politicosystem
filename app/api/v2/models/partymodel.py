@@ -25,12 +25,8 @@ class PartyModel(Database):
             method to get all parties from db.
         """
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
-        self.curr.execute(
-            """
-        SELECT party_id, name, hqaddress, logourl FROM parties
-        """)
-        all_parties = self.curr.fetchall()
-        self.save()
+        query = """ SELECT party_id, name, hqaddress, logourl FROM parties"""
+        all_parties = Database().fetch(query)
         return json.dumps(all_parties, default=str)
 
     def get_party_by_name(self, name):

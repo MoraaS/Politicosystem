@@ -37,7 +37,14 @@ class Database:
         data = self.curr.fetchone()
         self.save()
         return data
-        
+
+    def fetch(self, query):
+        """Manipulate query."""
+        self.curr.execute(query)
+        fetch_all = self.curr.fetchall()
+        self.conn.commit()
+        self.curr.close()
+        return fetch_all
 
     def create_tables(self):
         queries = [
@@ -59,11 +66,16 @@ class Database:
                office_type VARCHAR (50) NOT NULL
            );""",
             """CREATE TABLE IF NOT EXISTS voters (
-               voter_id serial PRIMARY KEY NOT NULL,
+               id serial NOT NULL,
                createdOn TIMESTAMP NULL DEFAULT NOW(),
                createdBy INTEGER NOT NULL,
                office_id INTEGER,
-               candidate_id INTEGER
+               candidate_id INTEGER,
+               PRIMARY KEY(createdBy, office_id),
+               FOREIGN KEY (createdBy) REFERENCES users(user_id) ON DELETE CASCADE,
+               FOREIGN KEY (office_id) REFERENCES office(office_id) ON DELETE CASCADE,
+               FOREIGN KEY (candidate_id) REFERENCES users(user_id) ON DELETE CASCADE
+
            );""",
             """CREATE TABLE IF NOT EXISTS parties(
                 party_id SERIAL PRIMARY KEY NOT NULL,
@@ -72,10 +84,14 @@ class Database:
                 logourl VARCHAR(50) NOT NULL
             );""",
             """CREATE TABLE IF NOT EXISTS candidates(
-                id SERIAL PRIMARY KEY NOT NULL,
+                id SERIAL NOT NULL,
                 office_id INTEGER NOT NULL,
                 party_id INTEGER NOT NULL,
-                candidate_id INTEGER NOT NULL
+                candidate_id INTEGER NOT NULL,
+                PRIMARY KEY (office_id, party_id, candidate_id),
+                FOREIGN KEY (candidate_id) REFERENCES users(user_id) ON DELETE CASCADE,
+                FOREIGN KEY (party_id) REFERENCES parties(party_id) ON DELETE CASCADE,
+                FOREIGN KEY (office_id) REFERENCES office(office_id) ON DELETE CASCADE
             );"""
         ]
         try:

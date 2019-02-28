@@ -19,18 +19,13 @@ class OfficeModel(Database):
         INSERT INTO office(name, office_type) VALUES
         ('{}','{}') RETURNING name, office_type'''.format(name, office_type)
         return Database().query_data(query)
-        
 
     def get_all_offices(self):
         """
             method to get all offices from db.
         """
-        self.curr.execute(
-            """
-        SELECT office_id, name,office_type FROM office
-        """)
-        offices = self.curr.fetchall()
-        self.save()
+        query = """ SELECT office_id, name,office_type FROM office"""
+        offices = Database().fetch(query)
         return json.dumps(offices, default=str)
 
     def get_by_id(self, office_id):
