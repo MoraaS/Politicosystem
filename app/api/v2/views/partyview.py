@@ -121,6 +121,6 @@ def edit_party(party_id):
         }
         party_object.append(party)
         return make_response(jsonify({"status": 200,
-                                      "message": "party has been updated successfully"},
-                                     party_object), 200)
+                                      "message": "party has been updated successfully",
+                                      "party": party_object}), 200)
     return make_response(jsonify({"status": 404, "error": "The party does not exist"}), 404)
