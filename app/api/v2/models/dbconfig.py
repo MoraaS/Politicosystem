@@ -35,16 +35,16 @@ class Database:
     def query_data(self, query):
         self.curr.execute(query)
         data = self.curr.fetchone()
-        self.save()
+        self.conn.commit()
+        self.curr.close()
         return data
 
     def fetch(self, query):
-        """Manipulate query."""
         self.curr.execute(query)
-        fetch_all = self.curr.fetchall()
+        data = self.curr.fetchall()
         self.conn.commit()
         self.curr.close()
-        return fetch_all
+        return data
 
     def create_tables(self):
         queries = [
