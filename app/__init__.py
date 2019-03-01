@@ -10,6 +10,7 @@ from app.api.v2.views.officeview import office_v2
 from app.api.v2.views.voterview import vote_v2
 from app.api.v2.views.partyview import party_v2
 from app.config import app_config
+from flask_cors import CORS
 
 
 def deal_with_wrong_request(e):
@@ -51,6 +52,8 @@ def deal_with_wrong_method(e):
 def create_app(config_name):
 
     app = Flask(__name__)
+    """enable the implementation of CORS across the app"""
+    CORS(app)
     app.config.from_pyfile('config.py')
     app.config['SECRET_KEY'] = 'ikeepgoing'
 
