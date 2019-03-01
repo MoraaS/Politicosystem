@@ -1,7 +1,8 @@
+"""importing modules to be used in the office routes"""
 import re
+import json
 from flask import Blueprint, make_response, request, jsonify
 from app.api.v2.models.officemodel import OfficeModel
-import json
 from app.api.utils import login_required, admin_required, validate_office
 from app.api.v2.models.usermodel import UserModel
 from app.api.v2.models.candidates import CandidatesModel
@@ -22,7 +23,7 @@ def create_office():
         office_type = data['office_type']
 
         if data['name'].isalpha() is False:
-                return make_response(jsonify({"status": 400, "message": "name should be alphabets"}), 400)
+            return make_response(jsonify({"status": 400, "message": "name should be alphabets"}), 400)
 
         if (len(name) < 6):
             return make_response(jsonify({
@@ -51,9 +52,7 @@ def create_office():
         return make_response(jsonify({
             "status": 201,
             "message": "office created successfully"
-        },
-            office_object
-        ), 201)
+        }, office_object), 201)
 
     else:
         return make_response(jsonify({"errors": errors,

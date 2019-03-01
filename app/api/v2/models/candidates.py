@@ -1,6 +1,6 @@
-from app.api.v2.models.dbconfig import Database
+"""import modules to be used in the candidates model"""
 import json
-
+from app.api.v2.models.dbconfig import Database
 
 
 class CandidatesModel(Database):
@@ -16,33 +16,18 @@ class CandidatesModel(Database):
 
     def create(self, office_id, party_id, candidate_id):
         """create candidate admin only function"""
-        self.curr.execute(
-            '''
-        INSERT INTO candidates(office_id, party_id, candidate_id) VALUES
-        ('{}','{}','{}') RETURNING office_id, party_id, candidate_id'''
-            .format(office_id, party_id, candidate_id))
-        new_candidate = self.curr.fetchone()
-        self.save()
-        return new_candidate
+        new_candidate = '''INSERT INTO candidates(office_id, party_id, candidate_id) VALUES
+        ('{}','{}','{}') RETURNING office_id, party_id, candidate_id'''.format(office_id, party_id, candidate_id)
+        return Database().query_data(new_candidate)
 
     def get_all_candidates(self):
-        """
-            method to get all candidates from db.
-        """
-        self.curr.execute(
-            """
-        SELECT office, candidate FROM candidates
-        """)
-        candidates = self.curr.fetchall()
-        self.save()
-        return json.dumps(candidates, default=str)
+        """method to get all candidates from db."""
+        query = """SELECT office, candidate FROM candidates"""
+        all_candidates = Database().fetch(query)
+        return json.dumps(all_candidates, default=str)
 
     def get_by_id(self, candidate_id):
         '''Defining method to get
         candidate by user id'''
-        self.curr.execute(
-            """SELECT * FROM candidates WHERE\
-                candidate_id={}""".format(candidate_id))
-        candidate = self.curr.fetchone()
-        self.save()
-        return candidate
+        query = """SELECT * FROM candidates WHERE +candidate_id={}""".format(candidate_id)
+        return Database().query_data(query)

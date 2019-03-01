@@ -1,9 +1,11 @@
-from app.api.v2.models.dbconfig import Database
+"""importing modules to be used in usermodel"""
 from psycopg2.extras import RealDictCursor
 from werkzeug.security import generate_password_hash
+from app.api.v2.models.dbconfig import Database
 
 
 class UserModel(Database):
+    """Base class for all methods in usermodel"""
 
     def __init__(self, firstname=None, lastname=None, othername=None,
                  email=None, phonenumber=None,
@@ -19,6 +21,7 @@ class UserModel(Database):
         self.isAdmin = isAdmin
 
     def register_user(self):
+        """method to register new user to the table user"""
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
         new_user = '''INSERT INTO users(firstname, lastname, othername, email,\
             phonenumber,password, passporturl, isAdmin)\
@@ -29,42 +32,18 @@ class UserModel(Database):
     def get_user_by_email(self, email):
         """Get user by their email"""
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
-        self.curr.execute('''
-            SELECT * FROM users WHERE users.email = '{}';
-            '''.format(email))
-        user_email = self.curr.fetchone()
-        self.save()
-        return user_email
+        get_email = '''SELECT * FROM users WHERE users.email = '{}';'''.format(
+            email)
+        return Database().query_data(get_email)
 
     def get_phoneNumber(self, phoneNumber):
         """Get user with specific phonenumber."""
-
-        self.curr.execute(
-            ''' SELECT * FROM users WHERE\
-                phoneNumber= '{}'''.format(phoneNumber))
-        user_number = self.curr.fetchone()
-        self.save()
-        return user_number
+        get_number = ''' SELECT * FROM users WHERE phoneNumber= '{}'''.format(
+            phoneNumber)
+        return Database().query_data(get_number)
 
     def get_user_by_id(self, user_id):
         """Get user by their id"""
         self.curr = self.conn.cursor(cursor_factory=RealDictCursor)
-        self.curr.execute('''
-            SELECT * FROM users WHERE users.user_id = '{}';
-            '''.format(user_id))
-        user_id = self.curr.fetchone()
-        self.save()
-        return user_id
-
-    def serialize(self):
-        '''convert user data to dictionary'''
-        return dict(
-            email=self.email,
-            firstname=self.firstname,
-            lastname=self.lastname,
-            othername=self.othername,
-            phonenumber=self.phonenumber,
-            password=self.password,
-            passporturl=self.passporturl,
-            isAdmin=self.isAdmin
-        )
+        single_user = '''SELECT * FROM users WHERE users.user_id = '{}';'''.format(user_id)
+        return Database().query_data(single_user)

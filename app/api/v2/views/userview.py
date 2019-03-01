@@ -1,23 +1,23 @@
+"""importing modules to be used in user routes"""
+import os
 import re
 import datetime
 import jwt
 from flask import Blueprint, make_response, request, jsonify
-from app.api.v2.models.usermodel import UserModel
-# from flask_jwt_extended import (create_access_token,
-#                                 jwt_required, get_jwt_identity)
-from app.api.utils import validate_login, validate_signup
 from werkzeug.security import check_password_hash
-import os
+from app.api.v2.models.usermodel import UserModel
+from app.api.utils import validate_login, validate_signup
+
 
 signup = Blueprint('signup', __name__, url_prefix='/api/v2/auth/')
 login = Blueprint('login', __name__, url_prefix='/api/v2/auth/')
 admin = Blueprint('admin', __name__, url_prefix='/api/v2/auth/')
 
-class UserRegister():
 
+class UserRegister():
     @signup.route('/signup', methods=['POST'])
     def signup():
-        '''Function of creating a party'''
+        '''Function of creating a user'''
         errors = validate_signup(request)
         if not errors:
 
@@ -66,8 +66,8 @@ class UserRegister():
 
             expires = datetime.datetime.utcnow() + datetime.timedelta(minutes=120)
             token = jwt.encode(
-                {'email': email, 'isAdmin': isAdmin,
-                    'exp': expires}, os.getenv('SECRET_KEY'))
+                {'email': email, 'isAdmin': isAdmin, 'exp': expires},
+                os.getenv('SECRET_KEY'))
 
             user_object = []
             user = {
@@ -95,9 +95,9 @@ class UserRegister():
 
 
 class LoginUser():
-
     @login.route('/login', methods=['POST'])
     def login():
+        """function of login ito the app"""
         errors = validate_login(request)
         if not errors:
 
@@ -122,8 +122,8 @@ class LoginUser():
 
             expires = datetime.datetime.utcnow() + datetime.timedelta(minutes=120)
             token = jwt.encode(
-                {'email': email, 'isAdmin': isAdmin,
-                    'exp': expires}, os.getenv('SECRET_KEY'))
+                {'email': email, 'isAdmin': isAdmin, 'exp': expires},
+                os.getenv('SECRET_KEY'))
             userlogin_object = []
             user = {
                 "email": email,
@@ -135,10 +135,7 @@ class LoginUser():
                 "status": 200,
                 "message": "You are successfully logged in",
                 "data": [{
-                    "token": token.decode('UTF-8')},
-                    userlogin_object]
-
-            }), 200)
+                    "token": token.decode('UTF-8')}, userlogin_object]}), 200)
         else:
             return make_response(jsonify({"errors": errors,
                                           "status": 400
@@ -171,8 +168,7 @@ class RegisterAdmin():
 
         expires = datetime.datetime.utcnow() + datetime.timedelta(minutes=120)
         token = jwt.encode(
-            {'email': email, 'isAdmin': isAdmin,
-                'exp': expires}, os.getenv('SECRET_KEY'))
+            {'email': email, 'isAdmin': isAdmin, 'exp': expires}, os.getenv('SECRET_KEY'))
 
         user_object = []
         user = {

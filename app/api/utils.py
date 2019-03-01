@@ -1,13 +1,14 @@
-import re
-from flask import jsonify, request, make_response
-# from flask_jwt_extended import get_jwt_identity
+"""the utils file contains validations for the app"""
+import os
 from functools import wraps
 import json
+from flask import jsonify, request, make_response
 import jwt
-import os
+
 
 
 def validate_signup(request):
+    """validates the signup keys and values"""
     data = request.get_json()
     errors = []
     signup_keys = ['firstname', 'lastname', 'othername',
@@ -53,6 +54,7 @@ def validate_signup(request):
 
 
 def validate_login(request):
+    """validate the login keys and values"""
     data = request.get_json()
 
     errors = []
@@ -80,6 +82,7 @@ def validate_login(request):
 
 
 def validate_parties(request):
+    """validate the parties keys and values"""
     data = request.get_json()
 
     errors = []
@@ -112,6 +115,7 @@ def validate_parties(request):
 
 
 def validate_office(request):
+    """validate the office keys and values"""
     data = request.get_json()
     errors = []
     office_keys = ["name", "office_type"]
@@ -139,6 +143,7 @@ def validate_office(request):
 
 
 def validate_votes(request):
+    """validate the votes keys and values"""
     data = request.get_json()
 
     errors = []
@@ -174,7 +179,7 @@ def validate_votes(request):
 
 
 def login_required(fn):
-    """Decorator to protect admin route"""
+    """Decorator to protect login required routes"""
     @wraps(fn)
     def token_decorator(*args, **kwargs):
 
@@ -186,7 +191,7 @@ def login_required(fn):
         try:
             data = jwt.decode(token, os.getenv('SECRET_KEY'))
         except Exception as e:
-            return make_response(jsonify({"message": "Login Token is required to access the method"}))
+            return make_response(jsonify({"message": "Login Token is required to access the method"}), 403)
 
         return fn(*args, **kwargs)
     return token_decorator
@@ -200,13 +205,13 @@ def admin_required(fn):
         if "Authorization" in request.headers:
             token = request.headers['Authorization']
         else:
-            return make_response(jsonify({"error": "Admin Token is required in order to access the method"}), 403)
+            return make_response(jsonify({"error": "Unauthorized Access Admin Token is required"}), 403)
 
         try:
             data = jwt.decode(token, os.getenv('SECRET_KEY'))
             if data['isAdmin'] != True:
 
-                return make_response(jsonify({"message": "To access the method admin token is required"}), 403)
+                return make_response(jsonify({"message": "Unauthorized Access Admin Token is required"}), 403)
         except Exception as e:
             return make_response(jsonify({"message": "token is invalid, put in the assigned token"}), 403)
 

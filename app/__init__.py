@@ -1,7 +1,6 @@
 '''Import the Flask class and register blueprints'''
 from flask import Flask, make_response, jsonify, request
 from app.api.v2.models.dbconfig import Database
-# from flask_jwt_extended import JWTManager
 from app.api.v1.views.officeView import office_endpoints
 from app.api.v1.views.partyView import party_endpoints
 from app.api.v2.views.userview import signup
@@ -14,6 +13,7 @@ from app.config import app_config
 
 
 def deal_with_wrong_request(e):
+    """function to deal with wrong requests"""
     return make_response(
         jsonify(
             {
@@ -25,6 +25,7 @@ def deal_with_wrong_request(e):
 
 
 def deal_with_wrong_url(e):
+    """function that checks for url entered"""
     return make_response(
         jsonify(
             {
@@ -36,6 +37,7 @@ def deal_with_wrong_url(e):
 
 
 def deal_with_wrong_method(e):
+    """checks for the method being used"""
     return make_response(
         jsonify(
             {

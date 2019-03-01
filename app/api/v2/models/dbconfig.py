@@ -1,11 +1,13 @@
 '''psycopg is a database adapter it helps
 create a connection using a cursor. . Extras is a library in psycopg
 that converts lists to dictionaries'''
+import os
 from datetime import datetime
+from sys import modules
 from psycopg2.extras import RealDictCursor
 import psycopg2
-import os
-from sys import modules
+
+
 
 
 class Database:
@@ -33,6 +35,7 @@ class Database:
         self.curr.close()
 
     def query_data(self, query):
+        """method used to query date in the db"""
         self.curr.execute(query)
         data = self.curr.fetchone()
         self.conn.commit()
@@ -40,6 +43,7 @@ class Database:
         return data
 
     def fetch(self, query):
+        """method used to query data from the db when fetching all"""
         self.curr.execute(query)
         data = self.curr.fetchall()
         self.conn.commit()
@@ -47,6 +51,7 @@ class Database:
         return data
 
     def create_tables(self):
+        """method to create tables in the database"""
         queries = [
             """
              CREATE TABLE IF NOT EXISTS users(
@@ -103,6 +108,7 @@ class Database:
             return e
 
     def destroy_tables(self):
+        """method to destroy tables in the database"""
         users = "DROP TABLE IF EXISTS users CASCADE"
         office = "DROP TABLE IF EXISTS office CASCADE"
         voters = "DROP TABLE IF EXISTS voters CASCADE"
