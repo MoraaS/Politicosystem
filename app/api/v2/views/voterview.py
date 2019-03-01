@@ -1,6 +1,6 @@
-import re
-from flask import Blueprint, make_response, request, jsonify
+"""importing modules to be used i the voter view"""
 import json
+from flask import Blueprint, make_response, request, jsonify
 from app.api.v2.models.candidates import CandidatesModel
 from app.api.v2.models.officemodel import OfficeModel
 from app.api.v2.models.votermodel import VoteModel
@@ -13,7 +13,7 @@ vote_v2 = Blueprint('vote', __name__, url_prefix='/api/v2/')
 @vote_v2.route('/vote', methods=['POST'])
 @login_required
 def new_vote():
-    '''Function for creatig a new vote'''
+    '''Function for creating a new vote'''
     errors = validate_votes(request)
     if not errors:
 
@@ -55,7 +55,7 @@ def new_vote():
 
         vote_object = []
         vote = {
-            "office_id": office_id,
+            "createdby": createdby,
             "office_id": office_id,
             "candidate_id": candidate_id
         }
@@ -69,5 +69,3 @@ def new_vote():
                                       "status": 400
 
                                       }), 400)
-
-

@@ -1,8 +1,9 @@
+"""importing modules to be used in the party views and routes"""
 import re
+import json
 from flask import Blueprint, make_response, request, jsonify
 from app.api.v2.models.partymodel import PartyModel
 from app.api.utils import validate_parties
-import json
 from app.api.utils import admin_required
 
 party_v2 = Blueprint('party2', __name__, url_prefix='/api/v2/')
@@ -51,9 +52,7 @@ def create_party():
         return make_response(jsonify({
             "status": 201,
             "message": "party created successfully"
-        },
-            party_object
-        ), 201)
+        }, party_object), 201)
 
     else:
         return make_response(jsonify({"errors": errors,
@@ -109,10 +108,9 @@ def edit_party(party_id):
 
     edited_party = PartyModel().get_party_by_id(party_id)
     edited_party = json.loads(edited_party)
-    print(edited_party)
 
     if edited_party:
-        new_party = PartyModel().update_party(name, party_id)
+        PartyModel().update_party(name, party_id)
         party_object = []
         party = {
 
